@@ -2,8 +2,8 @@
 
 
 ## Frontend
-# Current bugs: 
+### Current bugs: 
 attendant box size
 
-# Upcoming tasks
+### Upcoming tasks
 sorting option, fall back pages, accordion-based table for phone users

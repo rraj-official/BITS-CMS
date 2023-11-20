@@ -6,6 +6,7 @@ import Registered_complaints from './pages/Registered_complaints';
 import Admin from './pages/Admin';
 import New_complaint from './pages/New_complaint';
 import Technician from './pages/Technician';
+import AdminLogin from './pages/AdminLogin';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path='/login' element={<Login />}/>
+          <Route path='/adminlogin' element={<AdminLogin />}/>
           <Route path='/past_complaints' element={<Registered_complaints />}/>
           <Route path='/admin' element = {<Admin />}/>
           <Route path='/new_complaint' element = {<New_complaint />}/>

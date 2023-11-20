@@ -4,4 +4,4 @@
 attendant box size, hamburger menu position
 
 ### Upcoming tasks
-sorting option, fall back pages, accordion-based table for phone users
+sorting option, fall back pages, accordion-based table for phone users, add bitsp flag colours,

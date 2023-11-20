@@ -14,16 +14,66 @@ const userData = [
         date: "30 Sep 2023 11:23:50 AM",
         attendant: "Carpenter Admin",
         remarks: "Fixed"
+    },
+    {
+        id: 762354,
+        name: "Rohit Raj",
+        category: "Maintenance",
+        subcategory: "Carpentry",
+        status: "Completed",
+        // We need to restrict the description or else it will cause rendering issues
+        description: "The door is not closing fully. I have had this issue for a while now. The door stopper is also missing. Please send someone asap.",
+        date: "30 Sep 2023 11:23:50 AM",
+        attendant: "Carpenter Admin",
+        remarks: "Fixed"
+    },
+    {
+        id: 762354,
+        name: "Rohit Raj",
+        category: "Maintenance",
+        subcategory: "Carpentry",
+        status: "Completed",
+        // We need to restrict the description or else it will cause rendering issues
+        description: "The door is not closing fully. I have had this issue for a while now. The door stopper is also missing. Please send someone asap.",
+        date: "30 Sep 2023 11:23:50 AM",
+        attendant: "Carpenter Admin",
+        remarks: "Fixed"
+    },
+    {
+        id: 762354,
+        name: "Rohit Raj",
+        category: "Maintenance",
+        subcategory: "Carpentry",
+        status: "Completed",
+        // We need to restrict the description or else it will cause rendering issues
+        description: "The door is not closing fully. I have had this issue for a while now. The door stopper is also missing. Please send someone asap.",
+        date: "30 Sep 2023 11:23:50 AM",
+        attendant: "Carpenter Admin",
+        remarks: "Fixed"
+    },
+    {
+        id: 762354,
+        name: "Rohit Raj",
+        category: "Maintenance",
+        subcategory: "Carpentry",
+        status: "Completed",
+        // We need to restrict the description or else it will cause rendering issues
+        description: "The door is not closing fully. I have had this issue for a while now. The door stopper is also missing. Please send someone asap.",
+        date: "30 Sep 2023 11:23:50 AM",
+        attendant: "Carpenter Admin",
+        remarks: "Fixed"
     }
 ];
 
 
 const Admin = () => {
     return (
-        <div>
-            <h2 className="mt-10 mb-10 text-center text-2xl leading-9 tracking-tight text-gray-500">
-                Admin Dashboard
-            </h2>
+        <div className='bg-[#f6f8f9] mb-20'>
+            <div>
+                <h2 className="mb-10 pt-10 text-center text-2xl leading-9 tracking-tight text-gray-600">
+                    Admin Dashboard
+                </h2>
+            </div>
             <div className="relative overflow-x-auto px-10">
                 <table className="w-full text-sm text-left text-black dark:text-[#18185d]">
                     <thead className="text-xs text-white uppercase bg-[#18185d] dark:bg-[#6b3e17]] dark:text-white">

@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 // Sample User data
 const userData = [
     {
@@ -17,12 +16,11 @@ const userData = [
     }
 ];
 
-
-const Registered_complaints = () => {
+const Technician = () => {
     return (
         <div className='bg-[#f6f8f9] pt-5'>
             <h2 className="mt-10 mb-10 text-center text-2xl leading-9 tracking-tight text-gray-600">
-                Past Complaints Status
+                Technician Name
             </h2>
             <div className="relative overflow-x-auto px-10">
                 <table className="w-full text-sm text-left text-black dark:text-[#18185d]">
@@ -77,4 +75,4 @@ const Registered_complaints = () => {
     )
 }
 
-export default Registered_complaints
+export default Technician

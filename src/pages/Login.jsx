@@ -6,7 +6,7 @@ const Login = () => {
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 pb-10 lg:px-8 bg-[#f6f8f9]">
                 <div>
                     <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
-                        <h2 className="mt-10 mb-10 text-center text-2xl leading-9 tracking-tight text-gray-500">
+                        <h2 className="mt-10 mb-10 text-center text-2xl leading-9 tracking-tight text-gray-600">
                             Student Login
                         </h2>
                         <button className="bg-white w-full px-4 py-2 border flex justify-center gap-2 rounded-md text-black dark:text-gray-500  hover:text-slate-900 dark:hover:text-black hover:shadow transition duration-150">
@@ -23,7 +23,7 @@ const Login = () => {
                     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                         <form className="space-y-6">
                             <div>
-                                <h2 className="mb-10 text-center text-2xl leading-9 tracking-tight text-gray-500">
+                                <h2 className="mb-10 text-center text-2xl leading-9 tracking-tight text-gray-600">
                                     Admin Login
                                 </h2>
                                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-500">
@@ -36,7 +36,7 @@ const Login = () => {
                                         type="email"
                                         autoComplete="email"
                                         required
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        className="px-2 outline-none border-none block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 sm:text-sm sm:leading-6"
                                     // onChange={(e) => {
                                     //     setUsernameLog(e.target.value);
                                     // }}
@@ -58,7 +58,7 @@ const Login = () => {
                                         type="password"
                                         autoComplete="current-password"
                                         required
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        className="px-2 outline-none block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 sm:text-sm sm:leading-6"
                                     // onChange={(e) => {
                                     //     setPasswordLog(e.target.value);
                                     // }}
@@ -69,7 +69,7 @@ const Login = () => {
                             <div>
                                 <button
                                     type="submit"
-                                    className="flex w-full justify-center rounded-md bg-[#215fc9] px-3 py-1.5 transition duration-150 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#463ed8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                    className="flex w-full justify-center rounded-md bg-[#18185d] px-3 py-1.5 transition duration-150 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#2b2b74] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 // onClick={login}
                                 >
                                     Sign in

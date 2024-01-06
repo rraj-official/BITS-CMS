@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import DropDown from '../components/DropDown'
 import AddImages from '../components/AddImages';
+
 const userData = [];
 
 const New_complaint = () => {

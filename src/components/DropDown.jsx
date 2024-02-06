@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const attendants = [null, "Carpentry Admin", "Biju Krishnan", "Electricity Admin", "Ramesh"];
+const attendants = [null, "Carpentry Admin", "Plumbing Admin", "Electricity Admin", "Ramesh"];
 
 const DropDown = () => {
     // Initialize state for selectedAttendant

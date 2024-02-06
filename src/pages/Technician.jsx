@@ -9,6 +9,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Stack from '@mui/material/Stack';
 
 
+import React from 'react'
+import { useState } from 'react';
 // Sample User data
 /*const userData = [
     {
@@ -74,7 +76,10 @@ const smallTable=userData.map(item=>
         </AccordionDetails>
 </Accordion>)
 
+const remarks = [null, "Not Done", "Done"];
+
 const Technician = () => {
+    const [remark, setRemark] = useState(remarks[0]);
     return (
         <div className='bg-[#f6f8f9] pt-5'>
             <h2 className="mt-10 mb-10 text-center text-2xl leading-9 tracking-tight text-gray-600">
@@ -124,7 +129,25 @@ const Technician = () => {
                                 <th
                                     className="px-6 py-4">
                                     {user.id}
-                                </th><td className="px-6 py-4">{user.category} </td><td className="px-6 py-4">{user.subcategory}</td><td className="px-6 py-4">{user.status}</td><td className="px-6 py-4 max-w-md overflow-hidden break-words text-ellipsis">{user.description}</td><td className="px-6 py-4">{user.date}</td><td className="px-6 py-4"><button className='font-medium hover:font-semibold'>View images</button></td><td className="px-6 py-4">{user.attendant}</td><td className="px-6 py-4">{user.remarks}</td>
+                                </th><td className="px-6 py-4">{user.category} </td><td className="px-6 py-4">{user.subcategory}</td><td className="px-6 py-4">{user.status}</td><td className="px-6 py-4 max-w-md overflow-hidden break-words text-ellipsis">{user.description}</td><td className="px-6 py-4">{user.date}</td><td className="px-6 py-4"><button className='font-medium hover:font-semibold'>View images</button></td><td className="px-6 py-4">{user.attendant}</td><td className="px-6 py-4"><div className="max-w-full">
+                                    <select
+                                        id="remark"
+                                        name="remark"
+                                        autoComplete="remark-name"
+                                        className="block w-full rounded-md border-0 py-1.5 px-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-[#18185d] sm:max-w-xs sm:text-sm sm:leading-6"
+                                        value={remarks[0]}
+                                        onChange={(e) => {
+                                            setRemark(e.target.value);
+                                        }}
+                                    >
+                                        {/* Map through attendants array to generate options */}
+                                        {remarks.map((remark) => (
+                                            <option key={remark} value={remark}>
+                                                {remark}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div></td>
 
                             </>
 

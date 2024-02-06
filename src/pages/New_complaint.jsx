@@ -144,7 +144,7 @@ const New_complaint = () => {
                     className="rounded-md bg-[#18185d] px-3 py-2 text-sm font-normal text-white shadow-sm hover:bg-[#282876] transition duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 // onClick={updateUserData}
                 >
-                    Save
+                    Submit
                 </button>
             </div>
         </form>

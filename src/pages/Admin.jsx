@@ -7,6 +7,11 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Stack from '@mui/material/Stack';
+import { Dropdown } from '@mui/base/Dropdown';
+import { MenuButton } from '@mui/base/MenuButton';
+import { Menu } from '@mui/base/Menu';
+import { MenuItem } from '@mui/base/MenuItem';
+
 
 // Sample User data
 /*const userData = [
@@ -128,13 +133,27 @@ const smallTable=userData.map(item=>
 </Accordion>)
 
 
+function createHandleMenuClick(){
 
+}
 const Admin = () => {
     return (
         <div className='bg-[#f6f8f9] mb-20'>
             <div>
-                <h2 className="mb-10 pt-10 text-center text-2xl leading-9 tracking-tight text-gray-600">
+                <h2 className="mb-1 pt-10 text-center text-2xl leading-9 tracking-tight text-gray-600">
                     Admin Dashboard
+                </h2>
+                <h2 className="mb-[8rem] pt-1 pb-1000 text-center block ml-auto  text-2xl leading-9 tracking-tight text-gray-600">
+                <Dropdown>
+                    <MenuButton>My account</MenuButton>
+                    <Menu >
+                        <MenuItem onClick={createHandleMenuClick('Profile')}>Profile</MenuItem>
+                        <MenuItem onClick={createHandleMenuClick('Language settings')}>
+                        Language settings
+                        </MenuItem>
+                        <MenuItem onClick={createHandleMenuClick('Log out')}>Log out</MenuItem>
+                    </Menu>
+                </Dropdown>
                 </h2>
             </div>
             <div className="relative overflow-x-auto px-10">

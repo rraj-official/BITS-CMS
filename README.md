@@ -1,7 +1,7 @@
 # BITS Complaint Management System 2.0
 
 ## Current bugs 
-attendant box size, hamburger menu position
+attendant box size, hamburger menu position, flag lines for phone, admin login height(should be same as login page)
 
 ### Upcoming tasks
-sorting option, fall back pages, accordion-based table for phone users, add bitsp flag colours,
+sorting option, fall back pages, accordion-based table for phone users, footer info

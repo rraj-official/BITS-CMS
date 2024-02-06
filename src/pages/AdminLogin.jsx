@@ -2,9 +2,9 @@ import React from 'react'
 
 const AdminLogin = () => {
     return (
-        <div className='h-screen bg-[#f6f8f9]'>
+        <div className='bg-[#f6f8f9]'>
             <div className="flex pt-20 flex-1 flex-col justify-center px-6 pb-10 lg:px-8">
-                <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+                <div className="sm:mx-auto sm:w-full sm:max-w-sm mt-20">
                     <form className="space-y-6">
                         <div>
                             <h2 className="mb-10 text-center text-2xl leading-9 tracking-tight text-gray-600">

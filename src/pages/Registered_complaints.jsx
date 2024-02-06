@@ -14,13 +14,61 @@ const userData = [
         date: "30 Sep 2023 11:23:50 AM",
         attendant: "Carpenter Admin",
         remarks: "Fixed"
+    },
+    {
+        id: 762354,
+        name: "Rohit Raj",
+        category: "Maintenance",
+        subcategory: "Carpentry",
+        status: "Completed",
+        // We need to restrict the description or else it will cause rendering issues
+        description: "The door is not closing fully. I have had this issue for a while now. The door stopper is also missing. Please send someone asap.",
+        date: "30 Sep 2023 11:23:50 AM",
+        attendant: "Carpenter Admin",
+        remarks: "Fixed"
+    },
+    {
+        id: 762354,
+        name: "Rohit Raj",
+        category: "Maintenance",
+        subcategory: "Carpentry",
+        status: "Completed",
+        // We need to restrict the description or else it will cause rendering issues
+        description: "The door is not closing fully. I have had this issue for a while now. The door stopper is also missing. Please send someone asap.",
+        date: "30 Sep 2023 11:23:50 AM",
+        attendant: "Carpenter Admin",
+        remarks: "Fixed"
+    },
+    {
+        id: 762354,
+        name: "Rohit Raj",
+        category: "Maintenance",
+        subcategory: "Carpentry",
+        status: "Completed",
+        // We need to restrict the description or else it will cause rendering issues
+        description: "The door is not closing fully. I have had this issue for a while now. The door stopper is also missing. Please send someone asap.",
+        date: "30 Sep 2023 11:23:50 AM",
+        attendant: "Carpenter Admin",
+        remarks: "Fixed"
+    },
+    {
+        id: 762354,
+        name: "Rohit Raj",
+        category: "Maintenance",
+        subcategory: "Carpentry",
+        status: "Completed",
+        // We need to restrict the description or else it will cause rendering issues
+        description: "The door is not closing fully. I have had this issue for a while now. The door stopper is also missing. Please send someone asap.",
+        date: "30 Sep 2023 11:23:50 AM",
+        attendant: "Carpenter Admin",
+        remarks: "Fixed"
     }
 ];
 
 
 const Registered_complaints = () => {
     return (
-        <div className='bg-[#f6f8f9] pt-5'>
+        <div className='bg-[#f6f8f9] pt-5 mb-20'>
             <h2 className="mt-10 mb-10 text-center text-2xl leading-9 tracking-tight text-gray-600">
                 Past Complaints Status
             </h2>

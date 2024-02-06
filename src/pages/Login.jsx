@@ -3,7 +3,7 @@ import React from 'react'
 const Login = () => {
     return (
         <>
-            <div className="h-screen flex flex-1 flex-col px-6 pb-10 lg:px-8 bg-[#f6f8f9]">
+            <div className="flex flex-1 flex-col px-6 pb-10 lg:px-8 bg-[#f6f8f9]">
                 <div>
                     <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center mt-20">
                         <h2 className="mt-10 mb-10 text-center text-2xl leading-9 tracking-tight text-gray-600">
@@ -16,7 +16,7 @@ const Login = () => {
                                 loading="lazy"
                                 alt="google logo"
                             />
-                            <span>Sign in with Google</span>
+                            <span>Sign in with BITS Email</span>
                         </button>
                         <div className='w-full h-[1px] m-10 bg-gray-300'></div>
                         <p className="text-center text-xs text-gray-600">

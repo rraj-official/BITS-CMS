@@ -7,9 +7,6 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Stack from '@mui/material/Stack';
-
-
-import React from 'react'
 import { useState } from 'react';
 // Sample User data
 /*const userData = [

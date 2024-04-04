@@ -1,13 +1,14 @@
-import React, { useContext, createContext } from 'react';
+import React, { useContext, createContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from "jwt-decode";
 import axios from 'axios';
 import { AuthContext } from '../App';
 
+
 const Login = () => {
     const { isLoggedIn, setIsLoggedIn, loginData, setLoginData } = useContext(AuthContext);
-    
+
     const login = useGoogleLogin({
         onSuccess: async (response) => {
             try {
@@ -22,16 +23,27 @@ const Login = () => {
                 console.log(res);
                 setIsLoggedIn(true);
                 setLoginData(res);
+                localStorage.setItem('loginData', JSON.stringify(res));
             } catch (err) {
                 console.log(err);
             }
         }
     });
 
+    useEffect(() => {
+        const storedLoginData = localStorage.getItem('loginData');
+        if (storedLoginData) {
+            setLoginData(JSON.parse(storedLoginData));
+            setIsLoggedIn(true);
+        }
+    }, [setIsLoggedIn, setLoginData]);
+
     const navigate = useNavigate();
-    if (isLoggedIn) {
-        navigate('/new_complaint');
-    }
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate('/new_complaint');
+        }
+    }, [isLoggedIn, navigate]);
 
     return (
         <>

@@ -8,6 +8,7 @@ import React, { useContext } from 'react';
 import BITS_logo from '../images/BITS_logo.png';
 import BITS_flag_line from '../images/BITS_flag_line.gif';
 
+
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
@@ -23,6 +24,13 @@ const Navbar = () => {
         ...(isLoggedIn ? [{ name: 'Log Out', href: '/login', current: false }] : [{ name: 'Log In', href: '/login', current: false }]),
     ];
     
+
+
+    const logout = () => {
+        setIsLoggedIn(false);
+        localStorage.removeItem('loginData');
+        navigate('/login');
+    };
 
     const [selectedItem, setSelectedItem] = useState(navigation[0]);
     const handleItemClick = (item) => {
@@ -79,7 +87,7 @@ const Navbar = () => {
                                                         setSelectedItem(item);
                                                         // this implementation does not work yet for navbar to catch ids
                                                         if(item.name=="Log Out"){
-                                                            setIsLoggedIn(false);
+                                                            logout();
                                                         }
                                                         navigate(item.href, { state: location.state });
                                                     }}

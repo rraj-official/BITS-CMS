@@ -10,7 +10,15 @@ const userData=[];
 const New_complaint = () => {
     const navigate = useNavigate();
 
-    const { loginData} = useContext(AuthContext);
+    const {setLoginData,setIsLoggedIn, loginData} = useContext(AuthContext);
+
+    useEffect(() => {
+        const storedLoginData = localStorage.getItem('loginData');
+        if (storedLoginData) {
+            setLoginData(JSON.parse(storedLoginData));
+            setIsLoggedIn(true);
+        }
+    }, [setIsLoggedIn, setLoginData]);
 
     return (
         <form className='bg-[#f6f8f9]'>

@@ -1,18 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import DropDown from '../components/DropDown'
 import AddImages from '../components/AddImages';
+import { AuthContext } from '../App';
 
-const userData = [];
+const userData=[];
+
 
 const New_complaint = () => {
     const navigate = useNavigate();
+
+    const { loginData} = useContext(AuthContext);
+
     return (
         <form className='bg-[#f6f8f9]'>
             <div className="space-y-12 p-5 sm:mx-auto sm:w-2/3">
                 <div className="p-10 pb-20 border-b border-gray-900/10">
-                    <h2 className="text-xl mb-5 font-semibold leading-7 text-gray-900">Register a new complaint</h2>
-                    <p className="mt-1 text-sm leading-6 text-gray-600">Enter the details and click save.</p>
+                    <h2 className="text-xl mb-5 font-semibold leading-7 text-gray-900">Hi {loginData.data.given_name}, register a new complaint</h2>
+                    <p className="mt-1 text-sm leading-6 text-gray-600">Enter the details and click submit.</p>
 
                     <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 

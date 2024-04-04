@@ -3,15 +3,10 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { AuthContext } from '../App';
+import React, { useContext } from 'react';
 import BITS_logo from '../images/BITS_logo.png';
 import BITS_flag_line from '../images/BITS_flag_line.gif';
-
-const navigation = [
-    { name: 'New Complaint', href: '/new_complaint', current: true },
-    { name: 'Past Complaints', href: '/past_complaints', current: false },
-    { name: 'Log In', href: '/login', current: false },
-    { name: 'Log Out', href: '/login', current: false },
-]
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -20,6 +15,14 @@ function classNames(...classes) {
 const Navbar = () => {
     // const {loginUser}=props;
     // const {itemIndex}=props;
+
+    const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+    const navigation = [
+        ...(isLoggedIn ? [{ name: 'New Complaint', href: '/new_complaint', current: true }] : []),
+        ...(isLoggedIn ? [{ name: 'Past Complaints', href: '/past_complaints', current: false }] : []),
+        ...(isLoggedIn ? [{ name: 'Log Out', href: '/login', current: false }] : [{ name: 'Log In', href: '/login', current: false }]),
+    ];
+    
 
     const [selectedItem, setSelectedItem] = useState(navigation[0]);
     const handleItemClick = (item) => {
@@ -30,6 +33,7 @@ const Navbar = () => {
     const navigate = useNavigate();
     // this implementation does not work yet for navbar to catch ids
     const location = useLocation();
+    
     return (
         <Disclosure as="nav" className="bg-white">
             {({ open }) => (
@@ -74,6 +78,9 @@ const Navbar = () => {
                                                     onClick={() => {
                                                         setSelectedItem(item);
                                                         // this implementation does not work yet for navbar to catch ids
+                                                        if(item.name=="Log Out"){
+                                                            setIsLoggedIn(false);
+                                                        }
                                                         navigate(item.href, { state: location.state });
                                                     }}
                                                     aria-current={item.name == selectedItem.name ? 'page' : undefined}

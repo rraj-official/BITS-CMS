@@ -1,13 +1,18 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { AuthContext } from '../App';
-import React, { useContext } from 'react';
+import axios from "axios"
 import BITS_logo from '../images/BITS_logo.png';
 import BITS_flag_line from '../images/BITS_flag_line.gif';
 
+const navigation = [
+    { name: 'New Complaint', href: '/new_complaint', current: true, userType:"verified" },
+    { name: 'Past Complaints', href: '/past_complaints', current: false, userType:"verified" },
+    { name: 'Log In', href: '/login', current: false, userType:"unverified" },
+    { name: 'Log Out', href: '/login', current: false, userType:"verified" },
+]
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -16,21 +21,26 @@ function classNames(...classes) {
 const Navbar = () => {
     // const {loginUser}=props;
     // const {itemIndex}=props;
+    const [userdata, setUserdata] = useState({});
 
-    const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
-    const navigation = [
-        ...(isLoggedIn ? [{ name: 'New Complaint', href: '/new_complaint', current: true }] : []),
-        ...(isLoggedIn ? [{ name: 'Past Complaints', href: '/past_complaints', current: false }] : []),
-        ...(isLoggedIn ? [{ name: 'Log Out', href: '/login', current: false }] : [{ name: 'Log In', href: '/login', current: false }]),
-    ];
-    
+    const getUser = async () => {
+        try {
+            const response = await axios.get("http://localhost:5000/login/success", { withCredentials: true });
+            console.log(response.data.user)
+            setUserdata(response.data.user)
+        } catch (error) {
+            console.log("error", error)
+        }
+    }
 
+    useEffect(() => {
+        getUser()
+    }, [])
 
-    const logout = () => {
-        setIsLoggedIn(false);
-        localStorage.removeItem('loginData');
-        navigate('/login');
-    };
+    // logout
+    const logout = ()=>{
+        window.open("http://localhost:5000/logout","_self")
+    }
 
     const [selectedItem, setSelectedItem] = useState(navigation[0]);
     const handleItemClick = (item) => {
@@ -41,7 +51,6 @@ const Navbar = () => {
     const navigate = useNavigate();
     // this implementation does not work yet for navbar to catch ids
     const location = useLocation();
-    
     return (
         <Disclosure as="nav" className="bg-white">
             {({ open }) => (
@@ -76,8 +85,9 @@ const Navbar = () => {
                                 <div className="flex flex-1 items-center justify-center sm:justify-end">
                                     <div className="hidden sm:ml-6 sm:block">
                                         <div className="flex space-x-4">
-                                            {navigation.map((item) => (
-                                                <a
+                                            {navigation.map((item) => {
+                                                if((item.userType=='verified' && Object.keys(userdata).length>0 )||(item.userType=='unverified' && Object.keys(userdata).length==0)){
+                                                    return <a
                                                     key={item.name}
                                                     className={classNames(
                                                         item.name == selectedItem.name ? 'text-[#fe2d2d] tracking-wide text-xs hover:cursor-pointer uppercase' : 'text-black hover:text-[#fe2d2d] hover:cursor-pointer tracking-wide text-xs uppercase transition duration-150',
@@ -86,8 +96,10 @@ const Navbar = () => {
                                                     onClick={() => {
                                                         setSelectedItem(item);
                                                         // this implementation does not work yet for navbar to catch ids
-                                                        if(item.name=="Log Out"){
-                                                            logout();
+                                                        if(item.name=='Log Out'){
+                                                            logout()
+                                                            return
+
                                                         }
                                                         navigate(item.href, { state: location.state });
                                                     }}
@@ -95,7 +107,11 @@ const Navbar = () => {
                                                 >
                                                     {item.name}
                                                 </a>
-                                            ))}
+                                                }
+        
+                                                else return <></>
+                                                
+                                            })}
                                         </div>
                                     </div>
                                 </div>
@@ -132,8 +148,9 @@ const Navbar = () => {
                         leaveTo="transform opacity-0 scale-95">
                         <Disclosure.Panel className="sm:hidden">
                             <div className="space-y-1 px-2 pb-3 pt-2">
-                                {navigation.map((item) => (
-                                    <Disclosure.Button
+                                {navigation.map((item) => {
+                                    if((item.userType=='verified' && Object.keys(userdata).length>0 )||(item.userType=='unverified' && Object.keys(userdata).length==0)){
+                                    return <Disclosure.Button
                                         key={item.name}
                                         className={classNames(
                                             item.name == selectedItem.name ? 'bg-[#18185d] text-white text-sm uppercase text-center w-full' : 'w-full text-gray-300 hover:bg-gray-700 hover:text-white tracking-wide text-sm uppercase text-center',
@@ -143,12 +160,19 @@ const Navbar = () => {
                                         onClick={() => {
                                             setSelectedItem(item);
                                             // this implementation does not work yet for navbar to catch ids
+                                            if(item.name=='Log Out'){
+                                                logout()
+                                                return
+
+                                            }
                                             navigate(item.href, { state: location.state });
                                         }}
                                     >
                                         {item.name}
                                     </Disclosure.Button>
-                                ))}
+                                    }
+                                    else return <></>
+                                })}
                             </div>
                         </Disclosure.Panel>
 

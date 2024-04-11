@@ -11,16 +11,11 @@ import AdminLogin from './pages/AdminLogin';
 import Footer from './footer/Footer';
 import TestBackend from './pages/TestBackend';
 
-const AuthContext = createContext();
 
-function App() {
-
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loginData, setLoginData] = useState(null);
+export default function App() {
 
   return (
     <div className='min-h-screen flex flex-col'>
-      <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, loginData, setLoginData }}>
         <Router>
           <Navbar />
           <Routes>
@@ -35,9 +30,7 @@ function App() {
           </Routes>
           <Footer />
         </Router>
-      </AuthContext.Provider>
     </div>
   );
 }
 
-export { AuthContext, App as default };

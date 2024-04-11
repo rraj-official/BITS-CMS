@@ -6,7 +6,13 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Stack from '@mui/material/Stack';
+import axios from "axios"
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom'
 
+function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+}
 
 const smallTable=userData.map(item=>
     <Accordion>
@@ -54,6 +60,44 @@ const smallTable=userData.map(item=>
 </Accordion>)
 
 const Registered_complaints = () => {
+    const navigate=useNavigate()
+    const location=useLocation()
+    const [userdata, setUserdata] = useState({});
+    console.log("response", userdata)
+
+    const getUser = async () => {
+        try {
+            const response = await axios.get("http://localhost:5000/login/success", { withCredentials: true });
+            console.log(response.data.user)
+            setUserdata(response.data.user)
+        } catch (error) {
+            console.log("error", error)
+        }
+    }
+
+    useEffect(() => {
+        getUser()
+    }, [])
+
+    
+
+    if(Object.keys(userdata).length==0){
+        return <div className="space-y-12 p-5 sm:mx-auto sm:w-2/3">
+        <div className="p-10 pl-0 pb-20 border-b border-gray-900/10">
+            <h2 className={classNames( 'text-black',
+            'rounded-md px-2 py-2 text-sm font-normal'
+            )}>You are not authorized to view this page. Please <a
+            key='Log In'
+            className={classNames( 'text-[#fe2d2d] underline hover:text-black hover:cursor-pointer tracking-wide text-xs uppercase transition duration-150'
+            )}
+            onClick={() => {
+                navigate('/login', { state: location.state });
+            }}>log in</a>
+            </h2>
+        </div>
+    </div>
+    }
+    
     return (
         <div className='bg-[#f6f6f9] pt-5 flex flex-col h-full'>
             <h2 className="mt-10 mb-10 text-center text-2xl leading-9 tracking-tight text-gray-600">

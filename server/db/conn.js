@@ -1,8 +1,16 @@
 const mongoose = require("mongoose");
 
-const DB = ""
+const database="Registered_Complaints"
 
-mongoose.connect(DB,{
-    useUnifiedTopology:true,
-    useNewUrlParser:true
-}).then(()=>console.log("database connected")).catch((err)=>console.log("errr",err))
+const DB = `mongodb+srv://rrajofficial5:IxUE8MjYNtjqdspS@cluster0.ogrmntj.mongodb.net/${database}?retryWrites=true&w=majority&appName=Cluster0`
+
+async function connect() {
+    try {
+        await mongoose.connect(DB, {});
+        console.log("Database Connected");
+    } catch (err) {
+        console.log("Error connecting to database", err);
+    }
+}
+
+module.exports = { connect };

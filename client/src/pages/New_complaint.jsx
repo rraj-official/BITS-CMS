@@ -5,7 +5,7 @@ import AddImages from '../components/AddImages';
 import { NavLink } from "react-router-dom"
 import axios from "axios"
 
-const userData=[];
+const loginData = [];
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -13,15 +13,15 @@ function classNames(...classes) {
 
 const New_complaint = () => {
     const navigate = useNavigate();
-    const location=useLocation()
-    const [userdata, setUserdata] = useState({});
-    console.log("response", userdata)
+    const location = useLocation()
+    const [loginData, setLoginData] = useState({});
+    console.log("response", loginData)
 
     const getUser = async () => {
         try {
             const response = await axios.get("http://localhost:5000/login/success", { withCredentials: true });
             console.log(response.data.user)
-            setUserdata(response.data.user)
+            setLoginData(response.data.user)
         } catch (error) {
             console.log("error", error)
         }
@@ -30,27 +30,38 @@ const New_complaint = () => {
     useEffect(() => {
         getUser()
     }, [])
-    if(Object.keys(userdata).length==0){
+
+    const submitComplaint = async (complaintData) => {
+        try {
+            const response = await axios.post(`http://localhost:5000/api/student/complaints/${loginData.email}`, complaintData, { withCredentials: true });
+            console.log("Complaint Data sent successfully ");
+        }
+        catch {
+            console.log("Error sending complaints data to Server");
+        }
+    }
+
+    if (Object.keys(loginData).length == 0) {
         return <div className="space-y-12 p-5 sm:mx-auto sm:w-2/3">
-        <div className="p-10 pl-0 pb-20 border-b border-gray-900/10">
-            <h2 className={classNames( 'text-black',
-            'rounded-md px-2 py-2 text-sm font-normal'
-            )}>You are not authorized to view this page. Please <a
-            key='Log In'
-            className={classNames( 'text-[#fe2d2d] underline hover:text-black hover:cursor-pointer tracking-wide text-xs uppercase transition duration-150'
-            )}
-            onClick={() => {
-                navigate('/login', { state: location.state });
-            }}>log in</a>
-            </h2>
+            <div className="p-10 pl-0 pb-20 border-b border-gray-900/10">
+                <h2 className={classNames('text-black',
+                    'rounded-md px-2 py-2 text-sm font-normal'
+                )}>You are not authorized to view this page. Please <a
+                    key='Log In'
+                    className={classNames('text-[#fe2d2d] underline hover:text-black hover:cursor-pointer tracking-wide text-xs uppercase transition duration-150'
+                    )}
+                    onClick={() => {
+                        navigate('/login', { state: location.state });
+                    }}>log in</a>
+                </h2>
+            </div>
         </div>
-    </div>
     }
     return (
         <form className='bg-[#f6f8f9]'>
             <div className="space-y-12 p-5 sm:mx-auto sm:w-2/3">
                 <div className="p-10 pb-20 border-b border-gray-900/10">
-                    <h2 className="text-xl mb-5 font-semibold leading-7 text-gray-900">Hi {userdata.displayName}, register a new complaint</h2>
+                    <h2 className="text-xl mb-5 font-semibold leading-7 text-gray-900">Hi {loginData.displayName}, register a new complaint</h2>
                     <p className="mt-1 text-sm leading-6 text-gray-600">Enter the details and click submit.</p>
 
                     <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -110,7 +121,7 @@ const New_complaint = () => {
                                     name="first-name"
                                     id="first-name"
                                     autoComplete="given-name"
-                                    value={userData.first_name}
+                                    value={loginData.first_name}
                                     className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 border-none outline-none sm:text-sm sm:leading-6"
                                 // onChange={(e) => {
                                 //     setUserData({
@@ -132,7 +143,7 @@ const New_complaint = () => {
                                     name="last-name"
                                     id="last-name"
                                     autoComplete="family-name"
-                                    value={userData.last_name}
+                                    value={loginData.last_name}
                                     className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 border-none outline-none sm:text-sm sm:leading-6"
                                 // onChange={(e) => {
                                 //     setUserData({
@@ -172,16 +183,19 @@ const New_complaint = () => {
             </div>
             <div className="flex items-center justify-center gap-x-6 pb-20">
                 <button className="text-sm font-normal leading-6 px-3 py-2 rounded-md text-gray-900 bg-white"
-                    // onClick={(e) => {
-                    //     e.preventDefault();
-                    //     navigate('/', { state: userData.id });
-                    // }}
-                    >
+                onClick={(e) => {
+                    e.preventDefault();
+                    navigate('/past_complaints',);
+                }}
+                >
                     Cancel
                 </button>
                 <button
                     className="rounded-md bg-[#18185d] px-3 py-2 text-sm font-normal text-white shadow-sm hover:bg-[#282876] transition duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                // onClick={updateUserData}
+                onClick={(e) => {
+                    e.preventDefault();
+                    submitComplaint();
+                }}
                 >
                     Submit
                 </button>

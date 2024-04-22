@@ -1,6 +1,6 @@
 //import React from 'react'
 import * as React from 'react';
-import userData from '../components/userdata'
+import sampleComplaints from '../components/sampleComplaints'
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -8,27 +8,9 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Stack from '@mui/material/Stack';
 import { useState } from 'react';
-// Sample User data
-/*const userData = [
-    {
-        id: 762354,
-        name: "Rohit Raj",
-        category: "Maintenance",
-        subcategory: "Carpentry",
-        status: "Completed",
-        // We need to restrict the description or else it will cause rendering issues
-        description: "The door is not closing fully. I have had this issue for a while now. The door stopper is also missing. Please send someone asap.",
-        date: "30 Sep 2023 11:23:50 AM",
-        dateonly: "30 Sep 2023",
-        timeonly: "11:23:50 AM",
-        attendant: "Carpenter Admin",
-        remarks: "Fixed"
-    }
-];*/
-
   
 
-const smallTable=userData.map(item=>
+const smallTable=sampleComplaints.map(item=>
     <Accordion>
     <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
@@ -120,7 +102,7 @@ const Technician = () => {
                     </thead>
                     <tbody>
 
-                        {userData.map((user, index) => (
+                        {sampleComplaints.map((user, index) => (
                             <>
                                 <tr className="bg-white border-b dark:bg-white dark:border-gray-700"></tr>
                                 <th

@@ -41,7 +41,9 @@ passport.use(
         scope: ["profile", "email"]
     },
         async (accessToken, refreshToken, profile, done) => {
-            console.log(profile)
+            console.log("User Log In Successful");
+            console.log("Name: ",profile.displayName);
+            console.log("Email: ", profile.email, "\n");
             try {
                 user = {
                     googleId: profile.id,
@@ -182,10 +184,10 @@ const sampleData = [
 ];
 
 // To test insert data into DB
-students.insertStudentComplaints(sampleData[0]);
+// students.insertStudentComplaints(sampleData[0]);
 
 app.listen(PORT, () => {
-    console.log(`Server started on port ${PORT}`)
+    console.log(`Server started on port ${PORT} \n`)
 })
 
 

@@ -7,9 +7,9 @@ const DB = `mongodb+srv://rrajofficial5:IxUE8MjYNtjqdspS@cluster0.ogrmntj.mongod
 async function connect() {
     try {
         await mongoose.connect(DB, {});
-        console.log("Database Connected");
+        console.log("Database Connected\n");
     } catch (err) {
-        console.log("Error connecting to database", err);
+        console.log("Error connecting to database\n", err);
     }
 }
 

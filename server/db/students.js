@@ -68,9 +68,11 @@ async function getStudentComplaints(userName) {
     try {
         const complaints = await ComplaintsModel.find({ username: userName });
         console.log("Fetched student complaints data from database successfully")
+        console.log("UserName: ",userName);
         return complaints;
     } catch (err) {
         console.error("Error: Could not get complaints from database", err);
+        console.log("UserName: ",userName);
         return null;
     }
 }
@@ -78,9 +80,13 @@ async function getStudentComplaints(userName) {
 async function insertStudentComplaints(complaintsData) {
     try {
         await ComplaintsModel.insertMany(complaintsData);
-        console.log("Complaint data inserted successfully\n");
+        console.log("Complaint data inserted successfully");
+        console.log("Name: ",complaintsData.fullname);
+        console.log("UserName: ",complaintsData.username);
     } catch (err) {
-        console.error("Error: Could not insert Data\n", err);
+        console.error("Error: Could not insert Data\n");
+        console.log("Name: ",complaintsData.fullname);
+        console.log("UserName: ",complaintsData.username, err);
     }
 }
 
@@ -88,8 +94,12 @@ async function updateStudentComplaints(complaintId, newData) {
     try {
         await ComplaintsModel.updateOne({ Complaint_Id: complaintId }, newData);
         console.log("Complaint data updated successfully");
+        console.log("Name: ",complaintsData.fullname);
+        console.log("UserName: ",complaintsData.username);
     } catch (err) {
         console.error("Error: Could not update Data", err);
+        console.log("Name: ",complaintsData.fullname);
+        console.log("UserName: ",complaintsData.username);
     }
 }
 
@@ -111,9 +121,9 @@ const ComplaintImageModel = mongoose.model("ComplaintImages", complaintImageSche
 async function insertStudentComplaintImages(complaintImageData) {
     try {
         await ComplaintImageModel.insertMany(complaintImageData);
-        console.log("Complaint image data inserted successfully\n");
+        console.log("Complaint image data inserted successfully");
     } catch (err) {
-        console.error("Error: Could not insert image Data\n", err);
+        console.error("Error: Could not insert image Data", err);
     }
 }
 

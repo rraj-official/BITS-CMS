@@ -15,12 +15,11 @@ const New_complaint = () => {
     const navigate = useNavigate();
     const location = useLocation()
     const [loginData, setLoginData] = useState({});
-    console.log("response", loginData)
+    console.log("User Logged in:", loginData)
 
     const getUser = async () => {
         try {
             const response = await axios.get("http://localhost:5000/login/success", { withCredentials: true });
-            console.log(response.data.user)
             setLoginData(response.data.user)
         } catch (error) {
             console.log("error", error)
@@ -33,13 +32,49 @@ const New_complaint = () => {
 
     const submitComplaint = async (complaintData) => {
         try {
+            complaintData.fullname = loginData.displayName;
+            complaintData.username = loginData.email;
             const response = await axios.post(`http://localhost:5000/api/student/complaints/${loginData.email}`, complaintData, { withCredentials: true });
             console.log("Complaint Data sent successfully ");
+            console.table(complaintData);
         }
         catch {
             console.log("Error sending complaints data to Server");
         }
     }
+
+    const currentDate = new Date();
+    const dateString = currentDate.toLocaleString('en-US', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+    });
+
+    const [complaintData, setComplaintData] = useState({
+        Complaint_Id: -221313, // This needs to be unique
+        Complaint_logged_On: dateString,
+        Student_IdNo: "12345",
+        username: "",
+        fullname: "",
+        Category: "Maintenance",
+        sub_category: "Carpentry",
+        sub_sub_category: "",
+        User_department: "",
+        location: "",
+        location_no: "",
+        Mobile_no: "",
+        available_day: "",
+        description: "",
+        status: "New",
+        Forwarded_To_Incharge: "",
+        Remarks: ""
+    });
+
+
 
     if (Object.keys(loginData).length == 0) {
         return <div className="space-y-12 p-5 sm:mx-auto sm:w-2/3">
@@ -76,10 +111,13 @@ const New_complaint = () => {
                                     name="category"
                                     autoComplete="category-name"
                                     className="hover:cursor-pointer block w-full rounded-md border-0 px-2 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                                    value="Maintenance"
-                                // onChange={(e) => {
-                                //     setCountry(e.target.value);
-                                // }}
+                                    value={complaintData.Category}
+                                    onChange={(e) => {
+                                        setComplaintData(prevState => ({
+                                            ...prevState,
+                                            Category: e.target.value
+                                        }));
+                                    }}
                                 >
                                     <option>Maintenance</option>
                                     <option>IT</option>
@@ -97,10 +135,13 @@ const New_complaint = () => {
                                     name="category"
                                     autoComplete="category-name"
                                     className="hover:cursor-pointer block w-full rounded-md px-2 border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                                    value="Maintenance"
-                                // onChange={(e) => {
-                                //     setCountry(e.target.value);
-                                // }}
+                                    value={complaintData.sub_category}
+                                    onChange={(e) => {
+                                        setComplaintData(prevState => ({
+                                            ...prevState,
+                                            sub_category: e.target.value
+                                        }));
+                                    }}
                                 >
                                     <option>Carpentry</option>
                                     <option>Electrical</option>
@@ -121,14 +162,14 @@ const New_complaint = () => {
                                     name="first-name"
                                     id="first-name"
                                     autoComplete="given-name"
-                                    value={loginData.first_name}
+                                    value={complaintData.location_no}
                                     className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 border-none outline-none sm:text-sm sm:leading-6"
-                                // onChange={(e) => {
-                                //     setUserData({
-                                //         ...userData,
-                                //         first_name: e.target.value
-                                //     });
-                                // }}
+                                    onChange={(e) => {
+                                        setComplaintData(prevState => ({
+                                            ...prevState,
+                                            location_no: e.target.value
+                                        }));
+                                    }}
                                 />
                             </div>
                         </div>
@@ -143,14 +184,14 @@ const New_complaint = () => {
                                     name="last-name"
                                     id="last-name"
                                     autoComplete="family-name"
-                                    value={loginData.last_name}
+                                    value={complaintData.Mobile_no}
                                     className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 border-none outline-none sm:text-sm sm:leading-6"
-                                // onChange={(e) => {
-                                //     setUserData({
-                                //         ...userData,
-                                //         last_name: e.target.value
-                                //     });
-                                // }}
+                                    onChange={(e) => {
+                                        setComplaintData(prevState => ({
+                                            ...prevState,
+                                            Mobile_no: e.target.value
+                                        }));
+                                    }}
                                 />
                             </div>
                         </div>
@@ -174,7 +215,7 @@ const New_complaint = () => {
                                     name="description"
                                     rows={3}
                                     className="focus:ring-2 px-2 block w-full outline-none border-none rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                                    defaultValue={''}
+                                    defaultValue={complaintData.description}
                                 />
                             </div>
                         </div>
@@ -183,24 +224,24 @@ const New_complaint = () => {
             </div>
             <div className="flex items-center justify-center gap-x-6 pb-20">
                 <button className="text-sm font-normal leading-6 px-3 py-2 rounded-md text-gray-900 bg-white"
-                onClick={(e) => {
-                    e.preventDefault();
-                    navigate('/past_complaints',);
-                }}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        navigate('/past_complaints',);
+                    }}
                 >
                     Cancel
                 </button>
                 <button
                     className="rounded-md bg-[#18185d] px-3 py-2 text-sm font-normal text-white shadow-sm hover:bg-[#282876] transition duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                onClick={(e) => {
-                    e.preventDefault();
-                    submitComplaint();
-                }}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        submitComplaint(complaintData);
+                    }}
                 >
                     Submit
                 </button>
             </div>
-        </form>
+        </form >
     )
 }
 

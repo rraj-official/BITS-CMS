@@ -55,7 +55,7 @@ const New_complaint = () => {
     });
 
     const [complaintData, setComplaintData] = useState({
-        Complaint_Id: -221313, // This needs to be unique
+        Complaint_Id: -231221, // This needs to be unique
         Complaint_logged_On: dateString,
         Student_IdNo: "12345",
         username: "",
@@ -216,6 +216,12 @@ const New_complaint = () => {
                                     rows={3}
                                     className="focus:ring-2 px-2 block w-full outline-none border-none rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                                     defaultValue={complaintData.description}
+                                    onChange={(e) => {
+                                        setComplaintData(prevState => ({
+                                            ...prevState,
+                                            description: e.target.value
+                                        }));
+                                    }}
                                 />
                             </div>
                         </div>

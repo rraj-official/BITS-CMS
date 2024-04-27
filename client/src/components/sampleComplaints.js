@@ -1,10 +1,10 @@
 export default [
     {
-        id: 762354,
+        id: 761,
         name: "Rohit Raj",
         category: "Maintenance",
         subcategory: "Carpentry",
-        status: "Completed",
+        status: "New",
         // We need to restrict the description or else it will cause rendering issues
         description: "The door is not closing fully. I have had this issue for a while now. The door stopper is also missing. Please send someone asap.",
         date: "30 Sep 2023 11:23:50 AM",
@@ -14,11 +14,11 @@ export default [
         remarks: "Fixed"
     },
     {
-        id: 762354,
+        id: 762,
         name: "Rohit Raj",
         category: "Maintenance",
         subcategory: "Carpentry",
-        status: "Completed",
+        status: "Pending",
         // We need to restrict the description or else it will cause rendering issues
         description: "The door is not closing fully. I have had this issue for a while now. The door stopper is also missing. Please send someone asap.",
         date: "30 Sep 2023 11:23:50 AM",
@@ -28,7 +28,7 @@ export default [
         remarks: "Fixed"
     },
     {
-        id: 762354,
+        id: 763,
         name: "Rohit Raj",
         category: "Maintenance",
         subcategory: "Carpentry",

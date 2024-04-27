@@ -7,6 +7,13 @@ import axios from "axios"
 
 const loginData = [];
 
+//checks if a given email id belongs to a student
+function isStudent(email){
+    if(email.startsWith("f20")||email.startsWith("h20")){
+        return true
+    }
+}
+
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
@@ -55,7 +62,7 @@ const New_complaint = () => {
     });
 
     const [complaintData, setComplaintData] = useState({
-        Complaint_Id: -231221, // This needs to be unique
+        Complaint_Id: -555, // This needs to be unique
         Complaint_logged_On: dateString,
         Student_IdNo: "12345",
         username: "",

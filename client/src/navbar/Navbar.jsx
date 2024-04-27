@@ -6,35 +6,77 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import axios from "axios"
 import BITS_logo from '../images/BITS_logo.png';
 import BITS_flag_line from '../images/BITS_flag_line.gif';
+import SampleAdmins from '../components/SampleAdmins'
 
 const navigation = [
-    { name: 'New Complaint', href: '/new_complaint', current: true, userType:"verified" },
-    { name: 'Past Complaints', href: '/past_complaints', current: false, userType:"verified" },
     { name: 'Log In', href: '/login', current: false, userType:"unverified" },
-    { name: 'Log Out', href: '/login', current: false, userType:"verified" },
+    { name: 'New Complaint', href: '/new_complaint', current: true, userType:"student" },
+    { name: 'Past Complaints', href: '/past_complaints', current: false, userType:"student" },   
+    { name: 'Log Out', href: '/login', current: false, userType:"student" },
+    { name: 'New Complaint', href: '/new_complaint', current: true, userType:"staff" },
+    { name: 'Past Complaints', href: '/past_complaints', current: false, userType:"staf" },   
+    { name: 'Log Out', href: '/login', current: false, userType:"staff" },
+    { name: 'Students Complaints', href: '/students_complaints', current: false, userType:"admin" },
+    { name: 'Faculty & Staff Complaints', href: '/staff_complaints', current: false, userType:"admin" },
+    { name: 'Log Out', href: '/login', current: false, userType:"admin" },
 ]
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
+//checks if a given email id belongs to a student
+function isStudent(email){
+    console.log(email)
+    if(/*!SampleAdmins.includes(email)&&*/(email.startsWith("f20")||email.startsWith("h20"))){
+        return true
+    }
+    return false
+}
+
+function isAdmin(email){
+    if(SampleAdmins.includes(email)){
+        return true
+    }
+}
+
+
 const Navbar = () => {
     // const {loginUser}=props;
     // const {itemIndex}=props;
     const [userdata, setUserdata] = useState({});
+    const [userStatus, setUserStatus]=useState("unverified")
 
     const getUser = async () => {
         try {
             const response = await axios.get("http://localhost:5000/login/success", { withCredentials: true });
             console.log(response.data.user)
             setUserdata(response.data.user)
+            if(isAdmin(response.data.user.email)){
+                setUserStatus("admin")
+            }
+            else if(isStudent(response.data.user.email)){
+                setUserStatus("student")
+            }
+            else{
+                setUserStatus("staff")
+            }
         } catch (error) {
             console.log("error", error)
         }
     }
+    //assigns a status of admin, staff, or student to the user- the function is not executed if the user is not logged in
+    const verifyUser = async () => {
+        if(Object.keys(userdata).length>0){
+            console.log("yes")
+            
+        }
+        console.log(userStatus)
+    }
 
     useEffect(() => {
         getUser()
+        verifyUser()
     }, [])
 
     // logout
@@ -84,9 +126,10 @@ const Navbar = () => {
                             <div className='flex flex-col'>
                                 <div className="flex flex-1 items-center justify-center sm:justify-end">
                                     <div className="hidden sm:ml-6 sm:block">
+                                        
                                         <div className="flex space-x-4">
                                             {navigation.map((item) => {
-                                                if((item.userType=='verified' && Object.keys(userdata).length>0 )||(item.userType=='unverified' && Object.keys(userdata).length==0)){
+                                                if(item.userType==userStatus){
                                                     return <a
                                                     key={item.name}
                                                     className={classNames(
@@ -149,7 +192,7 @@ const Navbar = () => {
                         <Disclosure.Panel className="sm:hidden">
                             <div className="space-y-1 px-2 pb-3 pt-2">
                                 {navigation.map((item) => {
-                                    if((item.userType=='verified' && Object.keys(userdata).length>0 )||(item.userType=='unverified' && Object.keys(userdata).length==0)){
+                                    if(item.userType==userStatus){
                                     return <Disclosure.Button
                                         key={item.name}
                                         className={classNames(

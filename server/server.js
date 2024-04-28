@@ -6,6 +6,26 @@ const PORT = 5000;
 const session = require("express-session");
 const passport = require("passport");
 const OAuth2Strategy = require("passport-google-oauth2").Strategy;
+const SampleAdmins = require("./SampleAdmins.js")
+
+// To identify the type of user
+
+function isStudent(email){
+    if(/*!SampleAdmins.includes(email)&&*/(email.startsWith("f20")||email.startsWith("h20"))){
+        return "Student";
+    }
+    return false
+}
+
+function isAdmin(email){
+    if(SampleAdmins.includes(email)){
+        return "Admin";
+    }
+    return false;
+}
+
+let userType = "";
+let redirectURL = "http://localhost:3000/new_complaint";
 
 // Connect to MongoDB
 const db = require('./db/conn');
@@ -41,7 +61,15 @@ passport.use(
         scope: ["profile", "email"]
     },
         async (accessToken, refreshToken, profile, done) => {
-            console.log("User Log In Successful");
+            if(!isAdmin(profile.email) && !isStudent(profile.email)){
+                userType = "Technician";
+            }
+            userType = isAdmin(profile.email);
+            if(!userType) {
+                userType = isStudent(profile.email);
+            }
+            console.log("Log In Successful");
+            console.log("User type: ", userType);
             console.log("Name: ",profile.displayName);
             console.log("Email: ", profile.email, "\n");
             try {
@@ -72,7 +100,7 @@ passport.deserializeUser((user, done) => {
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 app.get("/auth/google/callback", passport.authenticate("google", {
-    successRedirect: "http://localhost:3000/new_complaint",
+    successRedirect: "http://localhost:3000/testbackend",
     failureRedirect: "http://localhost:3000/testbackend"
 }))
 
@@ -96,6 +124,40 @@ app.get("/logout", (req, res, next) => {
 app.get("/api", (req, res) => {
     res.json({ "users": ["userOne", "userTwo", "userThree"] })
 })
+
+// <---------------------------------------------------Admin Requests----------------------------------------------------------> //
+
+// Get complaints
+
+app.get("/api/student/complaints/", async (req, res) => {
+    try {
+        const studentComplaints = await students.getAllStudentComplaints();
+        res.json(studentComplaints);
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+// Update student complaint status and attendants
+app.post("/api/student/complaints/update", async (req, res) => {
+    const updatedComplaints = req.body;
+
+    try {
+        // Loop through updated complaints and update status/attendant of each one in the database
+        for (const complaint of updatedComplaints) {
+            await students.updateStudentComplaints(complaint);
+        }
+        
+        // Send a success response
+        res.status(200).json({ message: "Complaints updated successfully" });
+    } catch (error) {
+        // Handle errors
+        console.error("Error updating complaints:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+// <---------------------------------------------------Student Requests----------------------------------------------------------> //
 
 // Get complaints for the student
 

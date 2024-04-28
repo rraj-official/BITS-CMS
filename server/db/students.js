@@ -51,7 +51,7 @@ const complaintSchema = new mongoose.Schema({
 });
 
 // Define a pre-save hook to generate and increment the Complaint_Id
-complaintSchema.pre("save", async function(next) {
+complaintSchema.pre("save", async function (next) {
     try {
         if (!this.Complaint_Id) {
             this.Complaint_Id = await getNextSequenceValue("complaintId");
@@ -64,15 +64,50 @@ complaintSchema.pre("save", async function(next) {
 
 const ComplaintsModel = mongoose.model("Complaints", complaintSchema);
 
+// <---------------------------------------------------Admin Data Changes----------------------------------------------------------> //
+
+async function getAllStudentComplaints() {
+    try {
+        const complaints = await ComplaintsModel.find({});
+        console.log("Fetched all complaints data from database successfully");
+        return complaints;
+    } catch (err) {
+        console.error("Error: Could not get complaints from database", err);
+        return null;
+    }
+}
+
+async function updateStudentComplaints(newData) {
+    const complaintId = newData.id;
+    try {
+        if (newData.status) {
+            // If newData has status property, update status
+            await ComplaintsModel.updateOne({ Complaint_Id: complaintId }, { status: newData.status });
+            console.log("Complaint status updated successfully for complaint id: ", complaintId);
+        }
+
+        if (newData.attendant) {
+            // If newData has attendant property, update attendant
+            await ComplaintsModel.updateOne({ Complaint_Id: complaintId }, { Forwarded_To_Incharge: newData.attendant });
+            console.log("Complaint attendant updated successfully for complaint id: ", complaintId);
+        }
+    } catch (err) {
+        console.error("Error: Could not update Data", err);
+        console.log("Name: ", complaintsData.fullname);
+        console.log("UserName: ", complaintsData.username);
+    }
+}
+// <---------------------------------------------------Student Data Changes----------------------------------------------------------> //
+
 async function getStudentComplaints(userName) {
     try {
         const complaints = await ComplaintsModel.find({ username: userName });
         console.log("Fetched student complaints data from database successfully")
-        console.log("UserName: ",userName);
+        console.log("UserName: ", userName);
         return complaints;
     } catch (err) {
         console.error("Error: Could not get complaints from database", err);
-        console.log("UserName: ",userName);
+        console.log("UserName: ", userName);
         return null;
     }
 }
@@ -81,27 +116,27 @@ async function insertStudentComplaints(complaintsData) {
     try {
         await ComplaintsModel.insertMany(complaintsData);
         console.log("Complaint data inserted successfully");
-        console.log("Name: ",complaintsData.fullname);
-        console.log("UserName: ",complaintsData.username);
+        console.log("Name: ", complaintsData.fullname);
+        console.log("UserName: ", complaintsData.username);
     } catch (err) {
         console.error("Error: Could not insert Data\n");
-        console.log("Name: ",complaintsData.fullname);
-        console.log("UserName: ",complaintsData.username, err);
+        console.log("Name: ", complaintsData.fullname);
+        console.log("UserName: ", complaintsData.username, err);
     }
 }
 
-async function updateStudentComplaints(complaintId, newData) {
-    try {
-        await ComplaintsModel.updateOne({ Complaint_Id: complaintId }, newData);
-        console.log("Complaint data updated successfully");
-        console.log("Name: ",complaintsData.fullname);
-        console.log("UserName: ",complaintsData.username);
-    } catch (err) {
-        console.error("Error: Could not update Data", err);
-        console.log("Name: ",complaintsData.fullname);
-        console.log("UserName: ",complaintsData.username);
-    }
-}
+// async function updateStudentComplaints(complaintId, newData) {
+//     try {
+//         await ComplaintsModel.updateOne({ Complaint_Id: complaintId }, newData);
+//         console.log("Complaint data updated successfully");
+//         console.log("Name: ",complaintsData.fullname);
+//         console.log("UserName: ",complaintsData.username);
+//     } catch (err) {
+//         console.error("Error: Could not update Data", err);
+//         console.log("Name: ",complaintsData.fullname);
+//         console.log("UserName: ",complaintsData.username);
+//     }
+// }
 
 // Handling inserting and updating student complaint image data
 
@@ -136,4 +171,4 @@ async function updateStudentComplaintImages(complaintId, newData) {
     }
 }
 
-module.exports = { insertStudentComplaintImages, updateStudentComplaintImages, insertStudentComplaints, updateStudentComplaints, getStudentComplaints };
+module.exports = { updateStudentComplaints, getAllStudentComplaints, insertStudentComplaintImages, updateStudentComplaintImages, insertStudentComplaints, updateStudentComplaints, getStudentComplaints };

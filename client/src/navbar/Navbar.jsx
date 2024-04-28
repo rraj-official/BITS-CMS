@@ -9,16 +9,16 @@ import BITS_flag_line from '../images/BITS_flag_line.gif';
 import SampleAdmins from '../components/SampleAdmins'
 
 const navigation = [
-    { name: 'Log In', href: '/login', current: false, userType:"unverified" },
-    { name: 'New Complaint', href: '/new_complaint', current: true, userType:"student" },
-    { name: 'Past Complaints', href: '/past_complaints', current: false, userType:"student" },   
-    { name: 'Log Out', href: '/login', current: false, userType:"student" },
-    { name: 'New Complaint', href: '/new_complaint', current: true, userType:"staff" },
-    { name: 'Past Complaints', href: '/past_complaints', current: false, userType:"staf" },   
-    { name: 'Log Out', href: '/login', current: false, userType:"staff" },
-    { name: 'Students Complaints', href: '/students_complaints', current: false, userType:"admin" },
-    { name: 'Faculty & Staff Complaints', href: '/staff_complaints', current: false, userType:"admin" },
-    { name: 'Log Out', href: '/login', current: false, userType:"admin" },
+    { name: 'Log In', href: '/login', current: false, userType: "unverified" },
+    { name: 'New Complaint', href: '/new_complaint', current: true, userType: "student" },
+    { name: 'Past Complaints', href: '/past_complaints', current: false, userType: "student" },
+    { name: 'Log Out', href: '/login', current: false, userType: "student" },
+    { name: 'New Complaint', href: '/new_complaint', current: true, userType: "staff" },
+    { name: 'Past Complaints', href: '/past_complaints', current: false, userType: "staf" },
+    { name: 'Log Out', href: '/login', current: false, userType: "staff" },
+    { name: 'Students Complaints', href: '/students_complaints', current: false, userType: "admin" },
+    { name: 'Faculty & Staff Complaints', href: '/staff_complaints', current: false, userType: "admin" },
+    { name: 'Log Out', href: '/login', current: false, userType: "admin" },
 ]
 
 function classNames(...classes) {
@@ -26,16 +26,16 @@ function classNames(...classes) {
 }
 
 //checks if a given email id belongs to a student
-function isStudent(email){
+function isStudent(email) {
     console.log(email)
-    if(/*!SampleAdmins.includes(email)&&*/(email.startsWith("f20")||email.startsWith("h20"))){
+    if (/*!SampleAdmins.includes(email)&&*/(email.startsWith("f20") || email.startsWith("h20"))) {
         return true
     }
     return false
 }
 
-function isAdmin(email){
-    if(SampleAdmins.includes(email)){
+function isAdmin(email) {
+    if (SampleAdmins.includes(email)) {
         return true
     }
 }
@@ -45,43 +45,68 @@ const Navbar = () => {
     // const {loginUser}=props;
     // const {itemIndex}=props;
     const [userdata, setUserdata] = useState({});
-    const [userStatus, setUserStatus]=useState("unverified")
+    const [userStatus, setUserStatus] = useState("unverified")
 
     const getUser = async () => {
         try {
             const response = await axios.get("http://localhost:5000/login/success", { withCredentials: true });
             console.log(response.data.user)
             setUserdata(response.data.user)
-            if(isAdmin(response.data.user.email)){
+            if (isAdmin(response.data.user.email)) {
                 setUserStatus("admin")
             }
-            else if(isStudent(response.data.user.email)){
+            else if (isStudent(response.data.user.email)) {
                 setUserStatus("student")
             }
-            else{
+            else {
                 setUserStatus("staff")
             }
+            console.log(userStatus);
+            // if(Object.keys(response.data.user).length > 0){
+                // redirectUser(userStatus);
+            // }
+
         } catch (error) {
             console.log("error", error)
         }
     }
     //assigns a status of admin, staff, or student to the user- the function is not executed if the user is not logged in
     const verifyUser = async () => {
-        if(Object.keys(userdata).length>0){
+        if (Object.keys(userdata).length > 0) {
             console.log("yes")
-            
+
         }
         console.log(userStatus)
     }
 
+    // Redirects the user based on user type
+    const redirectUser = (userStatus) => {
+        console.log(userStatus);
+        if (userStatus === "admin") {
+            navigate("/students_complaints");
+        } else if (userStatus === "student") {
+            navigate("/new_complaint");
+        } else if (userStatus === "staff") {
+            navigate("/technician");
+        } else {
+            navigate("/login");
+        }
+    }
+
     useEffect(() => {
-        getUser()
-        verifyUser()
+        if (userStatus !== "unverified") {
+            redirectUser(userStatus);
+        }
+    }, [userStatus]);
+
+    useEffect(() => {
+        getUser();
+        verifyUser();
     }, [])
 
     // logout
-    const logout = ()=>{
-        window.open("http://localhost:5000/logout","_self")
+    const logout = () => {
+        window.open("http://localhost:5000/logout", "_self")
     }
 
     const [selectedItem, setSelectedItem] = useState(navigation[0]);
@@ -126,34 +151,34 @@ const Navbar = () => {
                             <div className='flex flex-col'>
                                 <div className="flex flex-1 items-center justify-center sm:justify-end">
                                     <div className="hidden sm:ml-6 sm:block">
-                                        
+
                                         <div className="flex space-x-4">
                                             {navigation.map((item) => {
-                                                if(item.userType==userStatus){
+                                                if (item.userType == userStatus) {
                                                     return <a
-                                                    key={item.name}
-                                                    className={classNames(
-                                                        item.name == selectedItem.name ? 'text-[#fe2d2d] tracking-wide text-xs hover:cursor-pointer uppercase' : 'text-black hover:text-[#fe2d2d] hover:cursor-pointer tracking-wide text-xs uppercase transition duration-150',
-                                                        'rounded-md px-2 py-2 text-sm font-normal'
-                                                    )}
-                                                    onClick={() => {
-                                                        setSelectedItem(item);
-                                                        // this implementation does not work yet for navbar to catch ids
-                                                        if(item.name=='Log Out'){
-                                                            logout()
-                                                            return
+                                                        key={item.name}
+                                                        className={classNames(
+                                                            item.name == selectedItem.name ? 'text-[#fe2d2d] tracking-wide text-xs hover:cursor-pointer uppercase' : 'text-black hover:text-[#fe2d2d] hover:cursor-pointer tracking-wide text-xs uppercase transition duration-150',
+                                                            'rounded-md px-2 py-2 text-sm font-normal'
+                                                        )}
+                                                        onClick={() => {
+                                                            setSelectedItem(item);
+                                                            // this implementation does not work yet for navbar to catch ids
+                                                            if (item.name == 'Log Out') {
+                                                                logout()
+                                                                return
 
-                                                        }
-                                                        navigate(item.href, { state: location.state });
-                                                    }}
-                                                    aria-current={item.name == selectedItem.name ? 'page' : undefined}
-                                                >
-                                                    {item.name}
-                                                </a>
+                                                            }
+                                                            navigate(item.href, { state: location.state });
+                                                        }}
+                                                        aria-current={item.name == selectedItem.name ? 'page' : undefined}
+                                                    >
+                                                        {item.name}
+                                                    </a>
                                                 }
-        
+
                                                 else return <></>
-                                                
+
                                             })}
                                         </div>
                                     </div>
@@ -192,27 +217,27 @@ const Navbar = () => {
                         <Disclosure.Panel className="sm:hidden">
                             <div className="space-y-1 px-2 pb-3 pt-2">
                                 {navigation.map((item) => {
-                                    if(item.userType==userStatus){
-                                    return <Disclosure.Button
-                                        key={item.name}
-                                        className={classNames(
-                                            item.name == selectedItem.name ? 'bg-[#18185d] text-white text-sm uppercase text-center w-full' : 'w-full text-gray-300 hover:bg-gray-700 hover:text-white tracking-wide text-sm uppercase text-center',
-                                            'block rounded-md px-3 py-2 text-base font-normal tracking-wide'
-                                        )}
-                                        aria-current={item.name == selectedItem.name ? 'page' : undefined}
-                                        onClick={() => {
-                                            setSelectedItem(item);
-                                            // this implementation does not work yet for navbar to catch ids
-                                            if(item.name=='Log Out'){
-                                                logout()
-                                                return
+                                    if (item.userType == userStatus) {
+                                        return <Disclosure.Button
+                                            key={item.name}
+                                            className={classNames(
+                                                item.name == selectedItem.name ? 'bg-[#18185d] text-white text-sm uppercase text-center w-full' : 'w-full text-gray-300 hover:bg-gray-700 hover:text-white tracking-wide text-sm uppercase text-center',
+                                                'block rounded-md px-3 py-2 text-base font-normal tracking-wide'
+                                            )}
+                                            aria-current={item.name == selectedItem.name ? 'page' : undefined}
+                                            onClick={() => {
+                                                setSelectedItem(item);
+                                                // this implementation does not work yet for navbar to catch ids
+                                                if (item.name == 'Log Out') {
+                                                    logout()
+                                                    return
 
-                                            }
-                                            navigate(item.href, { state: location.state });
-                                        }}
-                                    >
-                                        {item.name}
-                                    </Disclosure.Button>
+                                                }
+                                                navigate(item.href, { state: location.state });
+                                            }}
+                                        >
+                                            {item.name}
+                                        </Disclosure.Button>
                                     }
                                     else return <></>
                                 })}

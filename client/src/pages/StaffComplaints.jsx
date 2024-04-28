@@ -19,59 +19,59 @@ import { MenuItem } from '@mui/base/MenuItem';
 
 
 
-function createHandleMenuClick(){
+function createHandleMenuClick() {
 
 }
 const StaffComplaints = () => {
-    const complaintTypes = ["All", "New", "Pending",  "To Attend", "Completed",];
+    const complaintTypes = ["All", "New", "Pending", "To Attend", "Completed",];
     //selectedComplaintType is the type of complaint admin chooses to see on the table
     const [selectedComplaintType, setSelectedComplaintType] = useState(complaintTypes[0]);
 
-    const smallTable=sampleComplaints.filter(item=>item.status==selectedComplaintType||selectedComplaintType=='All').map(item=>
+    const smallTable = sampleComplaints.filter(item => item.status == selectedComplaintType || selectedComplaintType == 'All').map(item =>
         <Accordion>
-        <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-            className='flex justify-between'
+            <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+                className='flex justify-between'
             >
                 <Stack direction="row" justifyContent="space-between" minWidth="lg" className='w-full'>
                     <Stack justifyContent="center" alignItems="flex-start">
-                        <Typography sx={{fontWeight:'bold'}} className='text-gray-600'>{item.id}</Typography> 
-                        <Typography sx={{fontWeight:'bold'}} className='text-gray-600'>{item.category}</Typography> 
-                        <Typography sx={{fontWeight:'bold'}} className='text-[#028A0F]'><StatusDropDown currentStatus={item.status}/></Typography> 
+                        <Typography sx={{ fontWeight: 'bold' }} className='text-gray-600'>{item.id}</Typography>
+                        <Typography sx={{ fontWeight: 'bold' }} className='text-gray-600'>{item.category}</Typography>
+                        <Typography sx={{ fontWeight: 'bold' }} className='text-[#028A0F]'><StatusDropDown currentStatus={item.status} /></Typography>
                     </Stack>
                     <Stack justifyContent="center" alignItems="flex-end">
-                        <Typography sx={{fontWeight:'bold'}} className='text-[#18185d]'>{item.name}</Typography> 
-                        <Typography  className='text-gray-600'>{item.dateonly}</Typography> 
-                        <Typography  className='text-gray-600'>{item.timeonly}</Typography> 
+                        <Typography sx={{ fontWeight: 'bold' }} className='text-[#18185d]'>{item.name}</Typography>
+                        <Typography className='text-gray-600'>{item.dateonly}</Typography>
+                        <Typography className='text-gray-600'>{item.timeonly}</Typography>
                     </Stack>
                 </Stack>
-            
+
             </AccordionSummary>
             <AccordionDetails>
-                    <Stack justifyContent="center" alignItems="flex-start">
-                        <Typography className='flex gap-2 text-gray-600'>
-                            <Typography  sx={{fontWeight:'bold'}} className='text-[#18185d]'>Subcategory: </Typography>
-                            {item.subcategory}
-                        </Typography>
-                        <Typography className='flex  gap-4  text-gray-600'>
-                            <Typography sx={{fontWeight:'bold'}} className='text-[#18185d]'>Description:</Typography>
-                            {item.description}
-                        </Typography>
-                        <Typography className='flex  gap-6  text-gray-600'>
-                            <Typography sx={{fontWeight:'bold'}}className='text-[#18185d]'>Attendant: </Typography>
-                            <DropDown/>
-                        </Typography>
-                        <Typography className='flex  gap-9  text-gray-600'>
-                            <Typography sx={{fontWeight:'bold'}} className='text-[#18185d]'>Remarks:</Typography>
-                            {item.remarks}
-                        </Typography>
-                        <Typography sx={{fontWeight:'bold'}} className='text-[#18185d] text-center'>{"View images>"}</Typography>
-                    </Stack>
+                <Stack justifyContent="center" alignItems="flex-start">
+                    <Typography className='flex gap-2 text-gray-600'>
+                        <Typography sx={{ fontWeight: 'bold' }} className='text-[#18185d]'>Subcategory: </Typography>
+                        {item.subcategory}
+                    </Typography>
+                    <Typography className='flex  gap-4  text-gray-600'>
+                        <Typography sx={{ fontWeight: 'bold' }} className='text-[#18185d]'>Description:</Typography>
+                        {item.description}
+                    </Typography>
+                    <Typography className='flex  gap-6  text-gray-600'>
+                        <Typography sx={{ fontWeight: 'bold' }} className='text-[#18185d]'>Attendant: </Typography>
+                        <DropDown />
+                    </Typography>
+                    <Typography className='flex  gap-9  text-gray-600'>
+                        <Typography sx={{ fontWeight: 'bold' }} className='text-[#18185d]'>Remarks:</Typography>
+                        {item.remarks}
+                    </Typography>
+                    <Typography sx={{ fontWeight: 'bold' }} className='text-[#18185d] text-center'>{"View images>"}</Typography>
+                </Stack>
             </AccordionDetails>
-    </Accordion>)
-    
+        </Accordion>)
+
 
     return (
         <div className='bg-[#f6f8f9] mb-20'>
@@ -81,7 +81,7 @@ const StaffComplaints = () => {
                 </h2>
                 <h3 className="pt-2 text-center text-lg leading-9 tracking-tight text-gray-600 mb-5 ml-auto mr-auto">
                     <h4>Filter by:</h4>
-                    <div className="text-center ml-auto mr-auto w-fit" ><HeadDropDown selectedComplaintType={selectedComplaintType} setSelectedComplaintType={setSelectedComplaintType}/></div>
+                    <div className="text-center ml-auto mr-auto w-fit" ><HeadDropDown selectedComplaintType={selectedComplaintType} setSelectedComplaintType={setSelectedComplaintType} /></div>
                 </h3>
                 {/* <h2 className="mb-[8rem] pt-1 pb-1000 text-center block ml-auto  text-2xl leading-9 tracking-tight text-gray-600"> */}
                 {/* <Dropdown>
@@ -137,7 +137,7 @@ const StaffComplaints = () => {
                     </thead>
                     <tbody>
                         {/*renders only those complaints that fit the selected complaint type*/}
-                        {sampleComplaints.filter((user)=>user.status==selectedComplaintType||selectedComplaintType=='All').map((user) => (
+                        {sampleComplaints.filter((user) => user.status == selectedComplaintType || selectedComplaintType == 'All').map((user) => (
                             <>
                                 <tr className="bg-white border-b dark:bg-white dark:border-gray-700"></tr>
                                 <th
@@ -149,6 +149,25 @@ const StaffComplaints = () => {
                         ))}
                     </tbody>
                 </table>
+                <div className="flex items-center justify-center gap-x-6 pb-10 my-10">
+                    <button className="text-lg md:text-sm font-normal leading-6 px-3 py-2 rounded-md text-gray-900 bg-white"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            // navigate('/past_complaints',);
+                        }}
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        className="rounded-md bg-[#18185d] px-3 py-2 text-lg md:text-sm font-normal text-white shadow-sm hover:bg-[#282876] transition duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            // submitComplaint(complaintData);
+                        }}
+                    >
+                        Submit
+                    </button>
+                </div>
             </div>
         </div>
     )

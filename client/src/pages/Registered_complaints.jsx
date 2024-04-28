@@ -136,7 +136,7 @@ const Registered_complaints = () => {
     return (
         <div className='bg-[#f6f6f9] pt-5 flex flex-col h-full'>
             {loading ? (
-                <div>Loading...</div> 
+                <div>Loading...</div>
             ) : (
                 <>
                     <h2 className="mt-10 mb-10 text-center text-2xl leading-9 tracking-tight text-gray-600">
@@ -146,6 +146,7 @@ const Registered_complaints = () => {
                         <div className='w-full text-xxs text-left text-black dark:text-[#18185d] md:hidden'>
                             {smallTable}
                         </div>
+                        {/*Big Table*/}
                         <table className="w-full text-sm text-left text-black dark:text-[#18185d] hidden md:block bg-white mb-20">
                             <thead className="text-xs text-white uppercase bg-[#18185d] dark:bg-[#6b3e17]] dark:text-white">
                                 <tr>
@@ -186,7 +187,14 @@ const Registered_complaints = () => {
                                     <th
                                         className="px-6 py-4">
                                         {user.id}
-                                    </th><td className="px-6 py-4">{user.category} </td><td className="px-6 py-4">{user.subcategory}</td><td className="px-6 py-4">{user.status}</td><td className="px-6 py-4 max-w-md overflow-hidden break-words text-ellipsis">{user.description}</td><td className="px-6 py-4">{user.date}</td><td className="px-6 py-4"><button className='font-medium hover:font-semibold'>View images</button></td><td className="px-6 py-4">{user.attendant}</td><td className="px-6 py-4">{user.remarks}</td>
+                                    </th>
+                                    <td className="px-6 py-4">{user.category} </td>
+                                    <td className="px-6 py-4">{user.subcategory}</td>
+                                    <td className="px-6 py-4">{user.status}</td>
+                                    <td className="px-6 py-4 max-w-md overflow-hidden break-words text-ellipsis">{user.description}</td>
+                                    <td className="px-6 py-4">{user.date}</td><td className="px-6 py-4"><button className='font-medium hover:font-semibold'>View images</button></td>
+                                    <td className="px-6 py-4">{user.attendant}</td>
+                                    <td className="px-6 py-4">{user.remarks}</td>
 
                                 </tbody>
 

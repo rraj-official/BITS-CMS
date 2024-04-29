@@ -10,21 +10,24 @@ const DB = `mongodb+srv://rrajofficial5:IxUE8MjYNtjqdspS@cluster0.ogrmntj.mongod
 
 // Define schema for the counter collection
 const counterSchema = new mongoose.Schema({
-    _id: { type: String, required: true },
-    seq: { type: Number, default: 0 }
+    ComplaintId: Number,
+    ServerId: Number
 });
 
 // Create model for the counter collection
 const CounterModel = mongoose.model("Counter", counterSchema);
 
 // Function to get and increment counter
-async function getNextSequenceValue(sequenceName) {
-    const sequenceDocument = await CounterModel.findByIdAndUpdate(
-        sequenceName,
-        { $inc: { seq: 1 } },
-        { new: true, upsert: true }
-    );
-    return sequenceDocument.seq;
+async function generateNewComplaintId() {
+    try {
+        let counter = await CounterModel.findOneAndUpdate({ ServerId: 1 }, { $inc: { ComplaintId: 1 } }, { new: true });
+        console.log(counter);
+        console.log("New Complaint ID generated: ", counter.ComplaintId);
+        return counter.ComplaintId;
+    } catch (err) {
+        console.error("Error generating new complaint ID:", err);
+        throw err; // Rethrow the error for handling at a higher level
+    }
 }
 
 const complaintSchema = new mongoose.Schema({
@@ -51,16 +54,16 @@ const complaintSchema = new mongoose.Schema({
 });
 
 // Define a pre-save hook to generate and increment the Complaint_Id
-complaintSchema.pre("save", async function (next) {
-    try {
-        if (!this.Complaint_Id) {
-            this.Complaint_Id = await getNextSequenceValue("complaintId");
-        }
-        next();
-    } catch (err) {
-        next(err);
-    }
-});
+// complaintSchema.pre("save", async function (next) {
+//     try {
+//         if (!this.Complaint_Id) {
+//             this.Complaint_Id = await getNextSequenceValue("complaintId");
+//         }
+//         next();
+//     } catch (err) {
+//         next(err);
+//     }
+// });
 
 const ComplaintsModel = mongoose.model("Complaints", complaintSchema);
 
@@ -68,7 +71,7 @@ const ComplaintsModel = mongoose.model("Complaints", complaintSchema);
 
 async function getAllStudentComplaints() {
     try {
-        const complaints = await ComplaintsModel.find({});
+        const complaints = await ComplaintsModel.find({}).sort({ Complaint_Id: -1 });
         console.log("Fetched all complaints data from database successfully");
         return complaints;
     } catch (err) {
@@ -101,7 +104,7 @@ async function updateStudentComplaints(newData) {
 
 async function getStudentComplaints(userName) {
     try {
-        const complaints = await ComplaintsModel.find({ username: userName });
+        const complaints = await ComplaintsModel.find({ username: userName }).sort({ Complaint_Id: -1 });;
         console.log("Fetched student complaints data from database successfully")
         console.log("UserName: ", userName);
         return complaints;
@@ -113,6 +116,8 @@ async function getStudentComplaints(userName) {
 }
 
 async function insertStudentComplaints(complaintsData) {
+    const newID = await generateNewComplaintId();
+    complaintsData.Complaint_Id = newID;
     try {
         await ComplaintsModel.insertMany(complaintsData);
         console.log("Complaint data inserted successfully");
@@ -132,7 +137,7 @@ async function getStudentComplaintsForAttendant(attendantName) {
         const complaints = await ComplaintsModel.find({
             Forwarded_To_Incharge: attendantName,
             status: "Pending" // Add filter for status field
-        });
+        }).sort({ Complaint_Id: -1 });;
         console.log("Fetched student complaints data from database successfully for attendant:", attendantName);
         return complaints;
     } catch (err) {

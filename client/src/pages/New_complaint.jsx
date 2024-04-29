@@ -44,6 +44,7 @@ const New_complaint = () => {
             const response = await axios.post(`http://localhost:5000/api/student/complaints/${loginData.email}`, complaintData, { withCredentials: true });
             console.log("Complaint Data sent successfully ");
             console.table(complaintData);
+            navigate('/past_complaints')
         }
         catch {
             console.log("Error sending complaints data to Server");
@@ -62,7 +63,7 @@ const New_complaint = () => {
     });
 
     const [complaintData, setComplaintData] = useState({
-        Complaint_Id: 23, // This needs to be unique
+        Complaint_Id: -1, // This needs to be unique
         Complaint_logged_On: dateString,
         Student_IdNo: "",
         username: "",

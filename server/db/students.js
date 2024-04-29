@@ -93,8 +93,8 @@ async function updateStudentComplaints(newData) {
         }
     } catch (err) {
         console.error("Error: Could not update Data", err);
-        console.log("Name: ", complaintsData.fullname);
-        console.log("UserName: ", complaintsData.username);
+        console.log("Name: ", newData.fullname);
+        console.log("UserName: ", newData.username);
     }
 }
 // <---------------------------------------------------Student Data Changes----------------------------------------------------------> //
@@ -122,6 +122,37 @@ async function insertStudentComplaints(complaintsData) {
         console.error("Error: Could not insert Data\n");
         console.log("Name: ", complaintsData.fullname);
         console.log("UserName: ", complaintsData.username, err);
+    }
+}
+
+// <---------------------------------------------------Technician Data Changes----------------------------------------------------------> //
+
+async function getStudentComplaintsForAttendant(attendantName) {
+    try {
+        const complaints = await ComplaintsModel.find({
+            Forwarded_To_Incharge: attendantName,
+            status: "Pending" // Add filter for status field
+        });
+        console.log("Fetched student complaints data from database successfully for attendant:", attendantName);
+        return complaints;
+    } catch (err) {
+        console.error("Error: Could not get complaints from database", err);
+        console.log("Attendant: ", attendantName);
+        return null;
+    }
+}
+
+async function updateStudentComplaintsRemark(newData) {
+    const complaintId = newData.id;
+    const newRemark = newData.remark
+    try {
+        await ComplaintsModel.updateOne({ Complaint_Id: complaintId }, { Remarks: newRemark });
+        console.log("Complaint remark updated successfully for complaint id: ", complaintId);
+
+    } catch (err) {
+        console.error("Error: Could not update remark", err);
+        console.log("Name: ", newData.fullname);
+        console.log("UserName: ", newData.username);
     }
 }
 
@@ -171,4 +202,8 @@ async function updateStudentComplaintImages(complaintId, newData) {
     }
 }
 
-module.exports = { updateStudentComplaints, getAllStudentComplaints, insertStudentComplaintImages, updateStudentComplaintImages, insertStudentComplaints, updateStudentComplaints, getStudentComplaints };
+module.exports = {
+    getStudentComplaintsForAttendant, updateStudentComplaints, getAllStudentComplaints,
+    insertStudentComplaintImages, updateStudentComplaintImages, insertStudentComplaints, updateStudentComplaints,
+    getStudentComplaints, updateStudentComplaintsRemark
+};

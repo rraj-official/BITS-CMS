@@ -190,6 +190,40 @@ app.post("/api/student/complaints/:username", async (req, res) => {
     }
 });
 
+// <---------------------------------------------------Technician Requests----------------------------------------------------------> //
+
+// Get student complaints for the technician
+
+app.get("/api/student/complaints/technician/:attendant", async (req, res) => {
+    
+    const attendantName = req.params.attendant;
+    try {
+        const studentComplaints = await students.getStudentComplaintsForAttendant(attendantName);
+        res.json(studentComplaints);
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+// Update student complaint remark
+app.post("/api/student/complaints/technician/update", async (req, res) => {
+    const updatedComplaints = req.body;
+
+    try {
+        // Loop through updated complaints and update status/attendant of each one in the database
+        for (const complaint of updatedComplaints) {
+            await students.updateStudentComplaintsRemark(complaint);
+        }
+        
+        // Send a success response
+        res.status(200).json({ message: "Complaints updated successfully" });
+    } catch (error) {
+        // Handle errors
+        console.error("Error updating complaints:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
 // Printing starting date and time of server, useful for adding new complaints with dateString
 const currentDate = new Date();
 const dateString = currentDate.toLocaleString('en-US', {

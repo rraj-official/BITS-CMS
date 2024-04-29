@@ -8,8 +8,8 @@ import axios from "axios"
 const loginData = [];
 
 //checks if a given email id belongs to a student
-function isStudent(email){
-    if(email.startsWith("f20")||email.startsWith("h20")){
+function isStudent(email) {
+    if (email.startsWith("f20") || email.startsWith("h20")) {
         return true
     }
 }
@@ -62,9 +62,9 @@ const New_complaint = () => {
     });
 
     const [complaintData, setComplaintData] = useState({
-        Complaint_Id: -555, // This needs to be unique
+        Complaint_Id: 23, // This needs to be unique
         Complaint_logged_On: dateString,
-        Student_IdNo: "12345",
+        Student_IdNo: "",
         username: "",
         fullname: "",
         Category: "Maintenance",
@@ -159,6 +159,52 @@ const New_complaint = () => {
                             </div>
                         </div>
 
+
+
+                        <div className="sm:col-span-3">
+                            <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                Mobile No.
+                            </label>
+                            <div className="mt-2">
+                                <input
+                                    type="text"
+                                    name="last-name"
+                                    id="last-name"
+                                    autoComplete="family-name"
+                                    value={complaintData.Mobile_no}
+                                    className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 border-none outline-none sm:text-sm sm:leading-6"
+                                    onChange={(e) => {
+                                        setComplaintData(prevState => ({
+                                            ...prevState,
+                                            Mobile_no: e.target.value
+                                        }));
+                                    }}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="sm:col-span-3">
+                            <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                Student ID No.
+                            </label>
+                            <div className="mt-2">
+                                <input
+                                    type="text"
+                                    name="first-name"
+                                    id="first-name"
+                                    autoComplete="given-name"
+                                    value={complaintData.Student_IdNo}
+                                    className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 border-none outline-none sm:text-sm sm:leading-6"
+                                    onChange={(e) => {
+                                        setComplaintData(prevState => ({
+                                            ...prevState,
+                                            Student_IdNo: e.target.value
+                                        }));
+                                    }}
+                                />
+                            </div>
+                        </div>
+
                         <div className="sm:col-span-3">
                             <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
                                 Room No./Location No.
@@ -182,21 +228,21 @@ const New_complaint = () => {
                         </div>
 
                         <div className="sm:col-span-3">
-                            <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">
-                                Mobile No.
+                            <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                Location
                             </label>
                             <div className="mt-2">
                                 <input
                                     type="text"
-                                    name="last-name"
-                                    id="last-name"
-                                    autoComplete="family-name"
-                                    value={complaintData.Mobile_no}
+                                    name="first-name"
+                                    id="first-name"
+                                    autoComplete="given-name"
+                                    value={complaintData.location}
                                     className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 border-none outline-none sm:text-sm sm:leading-6"
                                     onChange={(e) => {
                                         setComplaintData(prevState => ({
                                             ...prevState,
-                                            Mobile_no: e.target.value
+                                            location: e.target.value
                                         }));
                                     }}
                                 />

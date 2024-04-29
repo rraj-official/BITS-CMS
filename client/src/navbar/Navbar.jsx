@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useState, useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom' 
 import axios from "axios"
 import BITS_logo from '../images/BITS_logo.png';
 import BITS_flag_line from '../images/BITS_flag_line.gif';
@@ -87,7 +87,7 @@ const Navbar = () => {
         } else if (userStatus === "student") {
             navigate("/new_complaint");
         } else if (userStatus === "staff") {
-            navigate("/technician");
+            navigate("/staff_new_complaint");
         } else {
             navigate("/login");
         }

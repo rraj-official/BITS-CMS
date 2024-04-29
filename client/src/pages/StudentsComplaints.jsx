@@ -20,9 +20,6 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-function createHandleMenuClick() {
-
-}
 const StudentsComplaints = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -84,9 +81,12 @@ const StudentsComplaints = () => {
         try {
             const response = await axios.get('http://localhost:5000/api/student/complaints/');
             console.log("Complaints Data fetched successfully");
-            const formattedData = response.data.map(({ Complaint_Id, fullname, Category, sub_category, status, description, Forwarded_To_Incharge, Remarks, Complaint_logged_On }) => ({
+            const formattedData = response.data.map(({ Complaint_Id, fullname, Category, Mobile_no, location, location_no, sub_category, status, description, Forwarded_To_Incharge, Remarks, Complaint_logged_On }) => ({
                 id: Complaint_Id,
                 name: fullname,
+                Mobile_no: Mobile_no,
+                location: location,
+                location_no: location_no,
                 category: Category,
                 subcategory: sub_category,
                 status: status,
@@ -103,6 +103,7 @@ const StudentsComplaints = () => {
             setLoading(false);
         }
     };
+
     useEffect(() => {
         fetchComplaints();
     }, [loginData]);
@@ -155,8 +156,7 @@ const StudentsComplaints = () => {
                     </Stack>
                     <Stack justifyContent="center" alignItems="flex-end">
                         <Typography sx={{ fontWeight: 'bold' }} className='text-[#18185d]'>{item.name}</Typography>
-                        <Typography className='text-gray-600'>{item.dateonly}</Typography>
-                        <Typography className='text-gray-600'>{item.timeonly}</Typography>
+                        <Typography className='text-gray-600 text-xs'>{item.location},{item.location_no}</Typography>
                     </Stack>
                 </Stack>
 
@@ -180,7 +180,14 @@ const StudentsComplaints = () => {
                         <Typography sx={{ fontWeight: 'bold' }} className='text-[#18185d]'>Remarks:</Typography>
                         {item.remarks}
                     </Typography>
-                    <Typography sx={{ fontWeight: 'bold' }} className='text-[#18185d] text-center'>{"View images>"}</Typography>
+                    <Typography sx={{ fontWeight: 'bold' }} className='text-[#222274] text-center'><u>View Images</u></Typography>
+                    <Typography className='flex  gap-9  text-gray-600'>
+                        <Typography sx={{ fontWeight: 'bold' }} className='text-[#222274]'>
+                            <a href={`tel:${item.Mobile_no}`}>
+                                <button><u>Call Now</u></button>
+                            </a>
+                        </Typography>
+                    </Typography>
                 </Stack>
             </AccordionDetails>
         </Accordion>)
@@ -223,14 +230,18 @@ const StudentsComplaints = () => {
                                 <div className='w-full text-xxs text-left text-black dark:text-[#18185d] md:hidden'>
                                     {loading ? "Loading..." : smallTable}
                                 </div>
-                                <table className="w-full text-sm text-left text-black dark:text-[#18185d] hidden md:block">
+                                <table className="bg-white w-full text-sm text-left text-black dark:text-[#18185d] hidden md:block">
                                     <thead className="text-xs text-white uppercase bg-[#18185d] dark:bg-[#6b3e17]] dark:text-white">
                                         <tr>
                                             <th scope="col" className="px-6 py-3">
                                                 Ticket Number
                                             </th>
                                             <th scope="col" className="px-6 py-3">
-                                                Name
+                                                Name &
+                                                Contact No.
+                                            </th>
+                                            <th scope="col" className="px-6 py-3">
+                                                Location
                                             </th>
                                             <th scope="col" className="px-6 py-3">
                                                 Category
@@ -264,7 +275,11 @@ const StudentsComplaints = () => {
                                             <>
                                                 <tr className="bg-white border-b dark:bg-white dark:border-gray-700"></tr>
                                                 <th className="px-6 py-4">{user.id}</th>
-                                                <td className="px-6 py-4">{user.name}</td>
+                                                <td className="px-6 py-4">
+                                                    {user.name}<br></br>
+                                                    {user.Mobile_no}
+                                                </td>
+                                                <td className="px-6 py-4">{user.location_no}, {user.location}</td>
                                                 <td className="px-6 py-4">{user.category}</td>
                                                 <td className="px-6 py-4">{user.subcategory}</td>
                                                 <td className="px-6 py-4">

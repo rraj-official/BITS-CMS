@@ -66,7 +66,7 @@ const Admin = () => {
     return (
         <div className='bg-[#f6f8f9] mb-20'>
             <div>
-                <h2 className="mb-1 pt-10 text-center text-2xl leading-9 tracking-tight text-gray-600 mb-10">
+                <h2 className="pt-10 text-center text-2xl leading-9 tracking-tight text-gray-600 mb-10">
                     Admin Dashboard
                 </h2>
                 {/* <h2 className="mb-[8rem] pt-1 pb-1000 text-center block ml-auto  text-2xl leading-9 tracking-tight text-gray-600"> */}

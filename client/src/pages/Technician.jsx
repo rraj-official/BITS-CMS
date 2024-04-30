@@ -28,7 +28,7 @@ const Technician = () => {
     const [loginData, setLoginData] = useState({});
     const fetchComplaints = async () => {
         try {
-            const response = await axios.get(`http://192.168.203.161:5000/api/student/complaints/technician/${technician_details.name}`);
+            const response = await axios.get(`http://localhost:5000/api/student/complaints/technician/${technician_details.name}`);
             console.log("Complaints Data fetched successfully");
             const formattedData = response.data.map(({ Complaint_Id, fullname, Mobile_no, Category, sub_category, location, location_no, status, description, Forwarded_To_Incharge, Remarks, Complaint_logged_On }) => ({
                 id: Complaint_Id,
@@ -82,10 +82,10 @@ const Technician = () => {
         const updatedComplaint = { id: complaintId, remark: newRemark };
         setUpdatedComplaints(prevState => [...prevState, updatedComplaint]);
     };
-
+    
     const updateComplaints = async (updatedComplaints) => {
         try {
-            const response = await axios.post(`http://192.168.203.161:5000/api/student/complaints/technician/update`, updatedComplaints, { withCredentials: true });
+            const response = await axios.post(`http://localhost:5000/api/student/complaints/technician/update`, updatedComplaints, { withCredentials: true });
             console.log("Complaint Remark updated successfully ");
             console.table(updatedComplaints);
             fetchComplaints();

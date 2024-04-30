@@ -21,7 +21,6 @@ const CounterModel = mongoose.model("Counter", counterSchema);
 async function generateNewComplaintId() {
     try {
         let counter = await CounterModel.findOneAndUpdate({ ServerId: 1 }, { $inc: { ComplaintId: 1 } }, { new: true });
-        console.log(counter);
         console.log("New Complaint ID generated: ", counter.ComplaintId);
         return counter.ComplaintId;
     } catch (err) {
@@ -65,7 +64,7 @@ const complaintSchema = new mongoose.Schema({
 //     }
 // });
 
-const ComplaintsModel = mongoose.model("Complaints", complaintSchema);
+const ComplaintsModel = mongoose.model("StudentComplaints", complaintSchema);
 
 // <---------------------------------------------------Admin Data Changes----------------------------------------------------------> //
 
@@ -210,5 +209,5 @@ async function updateStudentComplaintImages(complaintId, newData) {
 module.exports = {
     getStudentComplaintsForAttendant, updateStudentComplaints, getAllStudentComplaints,
     insertStudentComplaintImages, updateStudentComplaintImages, insertStudentComplaints, updateStudentComplaints,
-    getStudentComplaints, updateStudentComplaintsRemark
+    getStudentComplaints, updateStudentComplaintsRemark, generateNewComplaintId
 };

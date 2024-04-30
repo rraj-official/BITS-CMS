@@ -32,6 +32,7 @@ const db = require('./db/conn');
 db.connect();
 
 const students = require('./db/students');
+const staff = require('./db/staff');
 
 app.use(cors({
     origin: "http://localhost:3000",
@@ -127,7 +128,7 @@ app.get("/api", (req, res) => {
 
 // <---------------------------------------------------Admin Requests----------------------------------------------------------> //
 
-// Get complaints
+// Get student complaints
 
 app.get("/api/student/complaints/", async (req, res) => {
     try {
@@ -146,6 +147,36 @@ app.post("/api/student/complaints/update", async (req, res) => {
         // Loop through updated complaints and update status/attendant of each one in the database
         for (const complaint of updatedComplaints) {
             await students.updateStudentComplaints(complaint);
+        }
+        
+        // Send a success response
+        res.status(200).json({ message: "Complaints updated successfully" });
+    } catch (error) {
+        // Handle errors
+        console.error("Error updating complaints:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+// Get staff complaints
+
+app.get("/api/staff/complaints/", async (req, res) => {
+    try {
+        const staffComplaints = await staff.getAllStaffComplaints();
+        res.json(staffComplaints);
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+// Update staff complaint status and attendants
+app.post("/api/staff/complaints/update", async (req, res) => {
+    const updatedComplaints = req.body;
+
+    try {
+        // Loop through updated complaints and update status/attendant of each one in the database
+        for (const complaint of updatedComplaints) {
+            await staff.updateStaffComplaints(complaint);
         }
         
         // Send a success response
@@ -183,6 +214,39 @@ app.post("/api/student/complaints/:username", async (req, res) => {
         const result = await students.insertStudentComplaints(complaintData);
         // Send a success response
         res.status(200).json({ message: "Complaint submitted successfully of user", complaint: result });
+    } catch (error) {
+        // Handle errors
+        console.error("Error submitting complaint:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+// <---------------------------------------------------Staff Requests----------------------------------------------------------> //
+
+// Get complaints for the staff
+
+app.get("/api/staff/complaints/:username", async (req, res) => {
+    
+    const userName = req.params.username;
+    try {
+        const staffComplaints = await staff.getStaffComplaints(userName);
+        res.json(staffComplaints);
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+// Insert new complaint for the staff
+
+app.post("/api/staff/complaints/:username", async (req, res) => {
+    const username = req.params.username;
+    const complaintData = req.body; 
+
+    try {
+        // Insert the complaint into the database
+        const result = await staff.insertStaffComplaints(complaintData);
+        // Send a success response
+        res.status(200).json({ message: "Staff Complaint submitted successfully of user", complaint: result });
     } catch (error) {
         // Handle errors
         console.error("Error submitting complaint:", error);

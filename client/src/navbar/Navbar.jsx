@@ -81,7 +81,7 @@ const Navbar = () => {
 
     // Redirects the user based on user type
     const redirectUser = (userStatus) => {
-        console.log(userStatus);
+        // console.log(userStatus);
         if (userStatus === "admin") {
             navigate("/students_complaints");
         } else if (userStatus === "student") {

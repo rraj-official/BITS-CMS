@@ -183,19 +183,19 @@ const Registered_complaints = () => {
 
                             {complaintsData.map((user, index) => (
                                 <tbody>
-                                    <tr className="bg-white border-b dark:bg-white dark:border-gray-700"></tr>
-                                    <th
-                                        className="px-6 py-4">
-                                        {user.id}
-                                    </th>
-                                    <td className="px-6 py-4">{user.category} </td>
-                                    <td className="px-6 py-4">{user.subcategory}</td>
-                                    <td className="px-6 py-4">{user.status}</td>
-                                    <td className="px-6 py-4 max-w-md overflow-hidden break-words text-ellipsis">{user.description}</td>
-                                    <td className="px-6 py-4">{user.date}</td><td className="px-6 py-4"><button className='font-medium hover:font-semibold'>View images</button></td>
-                                    <td className="px-6 py-4">{user.attendant}</td>
-                                    <td className="px-6 py-4">{user.remarks}</td>
-
+                                    <tr className="bg-white border-b dark:bg-white dark:border-gray-700 hover:bg-[#fcfcfc]">
+                                        <th
+                                            className="px-6 py-4">
+                                            {user.id}
+                                        </th>
+                                        <td className="px-6 py-4">{user.category} </td>
+                                        <td className="px-6 py-4">{user.subcategory}</td>
+                                        <td className="px-6 py-4">{user.status}</td>
+                                        <td className="px-6 py-4 max-w-md overflow-hidden break-words text-ellipsis">{user.description}</td>
+                                        <td className="px-6 py-4">{user.date}</td><td className="px-6 py-4"><button className='font-medium hover:font-semibold'>View images</button></td>
+                                        <td className="px-6 py-4">{user.attendant}</td>
+                                        <td className="px-6 py-4">{user.remarks}</td>
+                                    </tr>
                                 </tbody>
 
                             ))}

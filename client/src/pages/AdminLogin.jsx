@@ -33,7 +33,7 @@ const AdminLogin = () => {
     }
     return (
         <div className='bg-[#f6f8f9]'>
-            <div className="flex pt-20 flex-1 flex-col justify-center px-6 pb-10 lg:px-8">
+            <div className="flex pt-20 flex-1 flex-col justify-center px-6 pb-10 lg:px-8 mb-20">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm mt-20">
                     <form className="space-y-6">
                         <div>

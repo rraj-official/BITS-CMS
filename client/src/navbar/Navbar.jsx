@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useState, useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom' 
+import { useLocation, useNavigate } from 'react-router-dom'
 import axios from "axios"
 import BITS_logo from '../images/BITS_logo.png';
 import BITS_flag_line from '../images/BITS_flag_line.gif';
@@ -13,12 +13,12 @@ const navigation = [
     { name: 'New Complaint', href: '/new_complaint', current: true, userType: "student" },
     { name: 'Past Complaints', href: '/past_complaints', current: false, userType: "student" },
     { name: 'Log Out', href: '/login', current: false, userType: "student" },
-    { name: 'New Complaint', href: '/new_complaint', current: true, userType: "staff" },
-    { name: 'Past Complaints', href: '/past_complaints', current: false, userType: "staf" },
+    { name: 'New Complaint', href: '/staff_new_complaint', current: true, userType: "staff" },
+    { name: 'Past Complaints', href: '/staff_past_complaints', current: false, userType: "staff" },
     { name: 'Log Out', href: '/login', current: false, userType: "staff" },
     { name: 'Students Complaints', href: '/students_complaints', current: false, userType: "admin" },
     { name: 'Faculty & Staff Complaints', href: '/staff_complaints', current: false, userType: "admin" },
-    { name: 'Log Out', href: '/login', current: false, userType: "admin" },
+    { name: 'Log Out', href: '/login', current: false, userType: "admin" }
 ]
 
 function classNames(...classes) {
@@ -63,7 +63,7 @@ const Navbar = () => {
             }
             console.log(userStatus);
             // if(Object.keys(response.data.user).length > 0){
-                // redirectUser(userStatus);
+            // redirectUser(userStatus);
             // }
 
         } catch (error) {
@@ -88,6 +88,8 @@ const Navbar = () => {
             navigate("/new_complaint");
         } else if (userStatus === "staff") {
             navigate("/staff_new_complaint");
+        } else if (userStatus === "technician") {
+            navigate("/technician");
         } else {
             navigate("/login");
         }
@@ -158,7 +160,7 @@ const Navbar = () => {
                                                     return <a
                                                         key={item.name}
                                                         className={classNames(
-                                                            item.name == selectedItem.name ? 'text-[#fe2d2d] tracking-wide text-xs hover:cursor-pointer uppercase' : 'text-black hover:text-[#fe2d2d] hover:cursor-pointer tracking-wide text-xs uppercase transition duration-150',
+                                                            item.name == selectedItem.name ? 'text-[#fe2d2d] tracking-wide text-xs hover:cursor-pointer uppercase transition ease-in-out delay-150 hover:-translate-y-1 duration-300 ' : 'text-black hover:text-[#fe2d2d] hover:cursor-pointer tracking-wide text-xs uppercase transition ease-in-out delay-150 hover:-translate-y-1 duration-300',
                                                             'rounded-md px-2 py-2 text-sm font-normal'
                                                         )}
                                                         onClick={() => {

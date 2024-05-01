@@ -283,7 +283,7 @@ const New_complaint = () => {
                 </div>
             </div>
             <div className="flex items-center justify-center gap-x-6 pb-20">
-                <button className="text-sm font-normal leading-6 px-3 py-2 rounded-md text-gray-900 bg-white"
+                <button className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 text-lg md:text-sm font-normal leading-6 px-3 py-2 rounded-md text-gray-900 bg-white"
                     onClick={(e) => {
                         e.preventDefault();
                         navigate('/past_complaints',);
@@ -292,7 +292,7 @@ const New_complaint = () => {
                     Cancel
                 </button>
                 <button
-                    className="rounded-md bg-[#18185d] px-3 py-2 text-sm font-normal text-white shadow-sm hover:bg-[#282876] transition duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 rounded-md bg-[#18185d] px-3 py-2 text-lg md:text-sm font-normal text-white shadow-sm hover:bg-[#282876] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     onClick={(e) => {
                         e.preventDefault();
                         submitComplaint(complaintData);

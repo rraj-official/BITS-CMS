@@ -3,7 +3,7 @@ const SampleAdmins = [
     "admin1@xyz.com",
     "admin2@xyz.com",
     "admin3@xyz.com",
-    // "f20220157@goa.bits-pilani.ac.in"
+    "f20220157@goa.bits-pilani.ac.in"
 ];
 
 module.exports = SampleAdmins;

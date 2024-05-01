@@ -128,6 +128,7 @@ const StaffComplaints = () => {
             console.log("Complaint Data updated successfully ");
             console.table(updatedComplaints);
             fetchComplaints();
+            setLoading(true); // This refreshes the table
         }
         catch {
             console.log("Error sending complaints data to Server");
@@ -211,7 +212,7 @@ const StaffComplaints = () => {
     }
 
     return (
-        <div className='bg-[#f6f8f9] mb-20'>
+        <div className='bg-[#f6f8f9]'>
             <div>
                 <div className='bg-[#f6f6f9] pt-5 flex flex-col h-full'>
                     {loading ? (
@@ -312,31 +313,32 @@ const StaffComplaints = () => {
                                         {/*renders only those complaints that fit the selected complaint type*/}
                                         {complaintsData.filter((user) => user.status == selectedComplaintType || selectedComplaintType == 'All').map((user) => (
                                             <>
-                                                <tr className="bg-white border-b dark:bg-white dark:border-gray-700"></tr>
-                                                <th className="px-2 py-4">{user.id}</th>
-                                                <td className="px-4 py-4">
-                                                    {user.name}<br></br>
-                                                    {user.Mobile_no}
-                                                </td>
-                                                <td className="px-4 py-4">{user.location_no}, {user.location}</td>
-                                                <td className="px-4 py-4">{user.category}</td>
-                                                <td className="px-4 py-4">{user.subcategory}</td>
-                                                <td className="px-4 py-4">
-                                                    <StatusDropDown currentStatus={user.status} handleStatusChange={(newStatus) => handleStatusChange(user.id, newStatus)} />
-                                                </td>
-                                                <td className="px-6 py-4 max-w-md overflow-hidden break-words text-ellipsis">{user.description}</td>
-                                                <td className="px-4 py-4">{user.date}</td>
-                                                <td className="px-4 py-4"><button className='font-medium hover:font-semibold'>View images</button></td>
-                                                <td className="px-4 py-4">
-                                                    <DropDown currentAttendant={user.attendant} handleAttendantChange={(newAttendant) => handleAttendantChange(user.id, newAttendant)} />
-                                                </td>
-                                                <td className="px-6 py-4">{user.remarks}</td>
+                                                <tr className="bg-white border-b dark:bg-white dark:border-gray-700 hover:bg-[#fcfcfc]">
+                                                    <th className="px-2 py-4">{user.id}</th>
+                                                    <td className="px-4 py-4">
+                                                        {user.name}<br></br>
+                                                        {user.Mobile_no}
+                                                    </td>
+                                                    <td className="px-4 py-4">{user.location_no}, {user.location}</td>
+                                                    <td className="px-4 py-4">{user.category}</td>
+                                                    <td className="px-4 py-4">{user.subcategory}</td>
+                                                    <td className="px-4 py-4">
+                                                        <StatusDropDown currentStatus={user.status} handleStatusChange={(newStatus) => handleStatusChange(user.id, newStatus)} />
+                                                    </td>
+                                                    <td className="px-6 py-4 max-w-md overflow-hidden break-words text-ellipsis">{user.description}</td>
+                                                    <td className="px-4 py-4">{user.date}</td>
+                                                    <td className="px-4 py-4"><button className='font-medium hover:font-semibold'>View images</button></td>
+                                                    <td className="px-4 py-4">
+                                                        <DropDown currentAttendant={user.attendant} handleAttendantChange={(newAttendant) => handleAttendantChange(user.id, newAttendant)} />
+                                                    </td>
+                                                    <td className="px-6 py-4">{user.remarks}</td>
+                                                </tr>
                                             </>
                                         ))}
                                     </tbody>
                                 </table>
                                 <div className="flex items-center justify-center gap-x-6 pb-10 my-10">
-                                    <button className="text-lg md:text-sm font-normal leading-6 px-3 py-2 rounded-md text-gray-900 bg-white"
+                                    <button className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 text-lg md:text-sm font-normal leading-6 px-3 py-2 rounded-md text-gray-900 bg-white"
                                         onClick={(e) => {
                                             e.preventDefault();
                                             window.location.reload();
@@ -345,7 +347,7 @@ const StaffComplaints = () => {
                                         Cancel
                                     </button>
                                     <button
-                                        className="rounded-md bg-[#18185d] px-3 py-2 text-lg md:text-sm font-normal text-white shadow-sm hover:bg-[#282876] transition duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                        className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 rounded-md bg-[#18185d] px-3 py-2 text-lg md:text-sm font-normal text-white shadow-sm hover:bg-[#282876] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                         onClick={(e) => {
                                             e.preventDefault();
                                             updateComplaints(updatedComplaints);

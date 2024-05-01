@@ -82,13 +82,14 @@ const Technician = () => {
         const updatedComplaint = { id: complaintId, remark: newRemark };
         setUpdatedComplaints(prevState => [...prevState, updatedComplaint]);
     };
-    
+
     const updateComplaints = async (updatedComplaints) => {
         try {
             const response = await axios.post(`http://localhost:5000/api/student/complaints/technician/update`, updatedComplaints, { withCredentials: true });
             console.log("Complaint Remark updated successfully ");
             console.table(updatedComplaints);
             fetchComplaints();
+            setLoading(true); // This refreshes the table
         }
         catch {
             console.log("Error sending complaints data to Server");
@@ -118,7 +119,7 @@ const Technician = () => {
             </AccordionSummary>
             <AccordionDetails>
                 <Stack justifyContent="center" alignItems="flex-start">
-                <Typography className='flex  gap-4  text-gray-600'>
+                    <Typography className='flex  gap-4  text-gray-600'>
                         <Typography sx={{ fontWeight: 'bold' }} className='text-[#18185d]'>Date:</Typography>
                         {item.date}
                     </Typography>
@@ -128,7 +129,7 @@ const Technician = () => {
                     </Typography>
                     <Typography className='flex  gap-9  text-gray-600'>
                         <Typography sx={{ fontWeight: 'bold' }} className='text-[#18185d]'>Remarks:</Typography>
-                        <RemarksDropDown currentRemark={item.attendant} handleRemarkChange={(newRemark) => handleRemarkChange(item.id, newRemark)}/>
+                        <RemarksDropDown currentRemark={item.attendant} handleRemarkChange={(newRemark) => handleRemarkChange(item.id, newRemark)} />
                     </Typography>
                     <Typography sx={{ fontWeight: 'bold' }} className='text-[#222274] text-center'><u>View Images</u></Typography>
                     <Typography className='flex  gap-9  text-gray-600'>
@@ -148,7 +149,7 @@ const Technician = () => {
             </h2>
             <div className="relative overflow-x-auto px-10">
                 <div className='w-full text-xxs text-left text-black dark:text-[#18185d] md:hidden'>
-                    {smallTable}
+                    {loading ? "Loading..." : smallTable}
                 </div>
                 <table className="w-full text-sm text-left text-black dark:text-[#18185d] hidden md:block bg-white">
                     <thead className="text-xs text-white uppercase bg-[#18185d] dark:bg-[#6b3e17]] dark:text-white">
@@ -186,26 +187,27 @@ const Technician = () => {
 
                         {complaintsData.map((user, index) => (
                             <>
-                                <tr className="bg-white border-b dark:bg-white dark:border-gray-700"></tr>
-                                <th
-                                    className="px-6 py-4">
-                                    {user.id}
-                                </th>
-                                <td className="px-6 py-4">{user.name} </td>
-                                <td className="px-6 py-4">{user.Mobile_no} </td>
-                                <td className="px-6 py-4">{user.location_no}, {user.location} </td>
-                                <td className="px-6 py-4">{user.subcategory}</td>
-                                <td className="px-6 py-4 max-w-md overflow-hidden break-words text-ellipsis">{user.description}</td>
-                                <td className="px-6 py-4">{user.date}</td>
-                                <td className="px-6 py-4"><button className='font-medium hover:font-semibold'>View images</button></td>
-                                <td className="px-6 py-4"><RemarksDropDown currentRemark={user.attendant} handleRemarkChange={(newRemark) => handleRemarkChange(user.id, newRemark)} /></td>
+                                <tr className="bg-white border-b dark:bg-white dark:border-gray-700 hover:bg-[#fcfcfc]">
+                                    <th
+                                        className="px-6 py-4">
+                                        {user.id}
+                                    </th>
+                                    <td className="px-6 py-4">{user.name} </td>
+                                    <td className="px-6 py-4">{user.Mobile_no} </td>
+                                    <td className="px-6 py-4">{user.location_no}, {user.location} </td>
+                                    <td className="px-6 py-4">{user.subcategory}</td>
+                                    <td className="px-6 py-4 max-w-md overflow-hidden break-words text-ellipsis">{user.description}</td>
+                                    <td className="px-6 py-4">{user.date}</td>
+                                    <td className="px-6 py-4"><button className='font-medium hover:font-semibold'>View images</button></td>
+                                    <td className="px-6 py-4"><RemarksDropDown currentRemark={user.attendant} handleRemarkChange={(newRemark) => handleRemarkChange(user.id, newRemark)} /></td>
+                                </tr>
                             </>
 
                         ))}
                     </tbody>
                 </table>
                 <div className="flex items-center justify-center gap-x-6 pb-10 my-10">
-                    <button className="text-lg md:text-sm font-normal leading-6 px-3 py-2 rounded-md text-gray-900 bg-white"
+                    <button className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 text-lg md:text-sm font-normal leading-6 px-3 py-2 rounded-md text-gray-900 bg-white"
                         onClick={(e) => {
                             e.preventDefault();
                             window.location.reload();
@@ -214,7 +216,7 @@ const Technician = () => {
                         Cancel
                     </button>
                     <button
-                        className="rounded-md bg-[#18185d] px-3 py-2 text-lg md:text-sm font-normal text-white shadow-sm hover:bg-[#282876] transition duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 rounded-md bg-[#18185d] px-3 py-2 text-lg md:text-sm font-normal text-white shadow-sm hover:bg-[#282876] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         onClick={(e) => {
                             e.preventDefault();
                             updateComplaints(updatedComplaints);

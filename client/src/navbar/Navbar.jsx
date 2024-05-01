@@ -7,6 +7,8 @@ import axios from "axios"
 import BITS_logo from '../images/BITS_logo.png';
 import BITS_flag_line from '../images/BITS_flag_line.gif';
 import SampleAdmins from '../components/SampleAdmins'
+import { TechnicianContext } from '../TechnicianContext';
+import { useContext } from 'react';
 
 const navigation = [
     { name: 'Log In', href: '/login', current: false, userType: "unverified" },
@@ -18,7 +20,10 @@ const navigation = [
     { name: 'Log Out', href: '/login', current: false, userType: "staff" },
     { name: 'Students Complaints', href: '/students_complaints', current: false, userType: "admin" },
     { name: 'Faculty & Staff Complaints', href: '/staff_complaints', current: false, userType: "admin" },
-    { name: 'Log Out', href: '/login', current: false, userType: "admin" }
+    { name: 'Log Out', href: '/login', current: false, userType: "admin" },
+    { name: 'Students Complaints', href: '/technician', current: false, userType: "technician" },
+    { name: 'Faculty & Staff Complaints', href: '/technician', current: false, userType: "technician" },
+    { name: 'Log Out', href: '/login', current: false, userType: "technician" }
 ]
 
 function classNames(...classes) {
@@ -42,6 +47,7 @@ function isAdmin(email) {
 
 
 const Navbar = () => {
+    const { technicianData, updateTechnicianData } = useContext(TechnicianContext);
     // const {loginUser}=props;
     // const {itemIndex}=props;
     const [userdata, setUserdata] = useState({});
@@ -49,6 +55,12 @@ const Navbar = () => {
 
     const getUser = async () => {
         try {
+            let isTechnician=false
+            if(technicianData.length>0){
+                setUserStatus("technician")
+                isTechnician=true
+            }
+            if(!isTechnician){
             const response = await axios.get("http://localhost:5000/login/success", { withCredentials: true });
             console.log(response.data.user)
             setUserdata(response.data.user)
@@ -65,6 +77,7 @@ const Navbar = () => {
             // if(Object.keys(response.data.user).length > 0){
             // redirectUser(userStatus);
             // }
+        }
 
         } catch (error) {
             console.log("error", error)
@@ -104,10 +117,20 @@ const Navbar = () => {
     useEffect(() => {
         getUser();
         verifyUser();
+        console.log(technicianData)
     }, [])
-
+    useEffect(() => {
+        getUser();
+        verifyUser();
+        console.log(technicianData)
+    }, [technicianData])
+    const navigate = useNavigate();
     // logout
     const logout = () => {
+        if(technicianData.length>0){
+            updateTechnicianData([])
+            navigate("/login")
+        }
         window.open("http://localhost:5000/logout", "_self")
     }
 
@@ -117,7 +140,7 @@ const Navbar = () => {
         setSelectedItem(item);
     };
 
-    const navigate = useNavigate();
+    
     // this implementation does not work yet for navbar to catch ids
     const location = useLocation();
     return (

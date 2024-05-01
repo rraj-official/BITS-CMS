@@ -1,5 +1,5 @@
 //import React from 'react'
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import sampleComplaints from '../components/sampleComplaints'
 import RemarksDropDown from '../components/RemarksDropDown';
 import Accordion from '@mui/material/Accordion';
@@ -10,7 +10,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Stack from '@mui/material/Stack';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from "axios";
-
+import { TechnicianContext } from '../TechnicianContext';
 
 const remarks = [null, "Not Done", "Done"];
 
@@ -19,6 +19,7 @@ const technician_details = {
     phone_number: "9999999999"
 }
 
+
 const Technician = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -26,6 +27,9 @@ const Technician = () => {
     const [complaintsData, setComplaintsData] = useState([]);
     const [updatedComplaints, setUpdatedComplaints] = useState([]);
     const [loginData, setLoginData] = useState({});
+    const { technicianData, updateTechnicianData } = useContext(TechnicianContext);
+    
+    
     const fetchComplaints = async () => {
         try {
             const response = await axios.get(`http://localhost:5000/api/student/complaints/technician/${technician_details.name}`);
@@ -52,6 +56,11 @@ const Technician = () => {
             setLoading(false);
         }
     };
+
+    
+function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+}
 
     useEffect(() => {
         fetchComplaints();
@@ -142,10 +151,11 @@ const Technician = () => {
                 </Stack>
             </AccordionDetails>
         </Accordion>)
+    if(technicianData.length>0)
     return (
         <div className='bg-[#f6f6f9] pt-5'>
             <h2 className="mt-10 mb-10 text-center text-xl md:text-2xl leading-9 tracking-tight text-gray-600">
-                Hi {technician_details.name}, here are your tasks for the day
+                Hi {technician_details.name}, here are your tasks for the day {technicianData}
             </h2>
             <div className="relative overflow-x-auto px-10">
                 <div className='w-full text-xxs text-left text-black dark:text-[#18185d] md:hidden'>
@@ -225,6 +235,22 @@ const Technician = () => {
                         Submit
                     </button>
                 </div>
+            </div>
+        </div>  
+    )
+    else return(
+        <div className="space-y-12 p-5 sm:mx-auto sm:w-2/3">
+            <div className="p-10 pl-0 pb-20 border-b border-gray-900/10">
+                <h2 className={classNames('text-black',
+                    'rounded-md px-2 py-2 text-sm font-normal'
+                )}>You are not authorized to view this page. Please <a
+                    key='Log In'
+                    className={classNames('text-[#fe2d2d] underline hover:text-black hover:cursor-pointer tracking-wide text-xs uppercase transition duration-150'
+                    )}
+                    onClick={() => {
+                        navigate('/adminlogin', { state: location.state });
+                    }}>log in</a>
+                </h2>
             </div>
         </div>
     )

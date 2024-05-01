@@ -14,11 +14,14 @@ import Footer from './footer/Footer';
 import TestBackend from './pages/TestBackend';
 import Staff_new_complaints from './pages/Staff_new_complaints.jsx';
 import Staff_registered_complaints from './pages/Staff_registered_complaints.jsx';
-
+import {TechnicianContext} from './TechnicianContext.js';
+//export const TechnicianContext = React.createContext("");
 
 export default function App() {
-
+  const [technicianData, updateTechnicianData]=React.useState([])
+  
   return (
+    <TechnicianContext.Provider value={{technicianData, updateTechnicianData}}>
     <div className='min-h-screen flex flex-col'>
         <Router>
           <Navbar />
@@ -39,6 +42,7 @@ export default function App() {
           <Footer />
         </Router>
     </div>
+    </TechnicianContext.Provider>
   );
 }
 

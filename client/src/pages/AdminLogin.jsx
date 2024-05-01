@@ -1,8 +1,8 @@
 import React from 'react'
 import { Form } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
-
-
+import { TechnicianContext } from '../TechnicianContext';
+import { useContext } from 'react';
 
 const technician_details = [
    {name: 'Anand',
@@ -11,6 +11,7 @@ const technician_details = [
 
 
 const AdminLogin = () => {
+    const { technicianData, updateTechnicianData } = useContext(TechnicianContext);
     const navigate=useNavigate()
     const [formData, updateFormData]=React.useState({name:"", phone_number:""})
     const [incorrectCredential, updateIncorrectCredential]=React.useState(false)
@@ -20,10 +21,14 @@ const AdminLogin = () => {
         for (var i = 0; i < technician_details.length && flag ; i++) {
             if(technician_details[i].name===formData.name && technician_details[i].phone_number==formData.phone_number){
                 flag=false;
+                let technician=[]
+                technician.push(technician_details[i].name)
+                technician.push(technician_details[i].phone_number)
+                updateTechnicianData(technician)
             }
         }
         if(!flag){
-            updateIncorrectCredential(false)
+            updateIncorrectCredential(false)  
             navigate("/technician")
         }
         else{

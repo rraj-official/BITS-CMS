@@ -88,38 +88,79 @@ const Admin = () => {
                 </div>
                 <table className="w-full text-sm text-left text-black dark:text-[#18185d] hidden md:block">
                     <thead className="text-xs text-white uppercase bg-[#18185d] dark:bg-[#6b3e17]] dark:text-white">
-                        <tr>
-                            <th scope="col" className="px-6 py-3">
-                                Ticket Number
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Name
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Category
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Subcategory
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Status
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Description
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Date
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Images
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Attendant
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Remarks
-                            </th>
-                        </tr>
+                    {(sampleComplaints.length>0) ? (<tr>
+                                            <th scope="col" className="px-4 py-3">
+                                                Ticket Number
+                                            </th>
+                                            <th scope="col" className="px-4 py-3">
+                                                Name &
+                                                Contact No.
+                                            </th>
+                                            <th scope="col" className="px-4 py-3">
+                                                Location
+                                            </th>
+                                            <th scope="col" className="px-4 py-3">
+                                                Category
+                                            </th>
+                                            <th scope="col" className="px-4 py-3">
+                                                Subcategory
+                                            </th>
+                                            <th scope="col" className="px-4 py-3">
+                                                Complaint Status
+                                            </th>
+                                            <th scope="col" className="px-6 py-3">
+                                                Description
+                                            </th>
+                                            <th scope="col" className="px-4 py-3">
+                                                Date
+                                            </th>
+                                            <th scope="col" className="px-4 py-3">
+                                                Images
+                                            </th>
+                                            <th scope="col" className="px-4 py-3">
+                                                Attendant
+                                            </th>
+                                            <th scope="col" className="px-6 py-3">
+                                                Remarks
+                                            </th>
+                                        </tr>) : (
+                                            <tr>
+                                                <th scope="col" className="px-7 py-3">
+                                                    Ticket Number
+                                                </th>
+                                                <th scope="col" className="px-7 py-3">
+                                                    Name &
+                                                    Contact No.
+                                                </th>
+                                                <th scope="col" className="px-7 py-3">
+                                                    Location
+                                                </th>
+                                                <th scope="col" className="px-7 py-3">
+                                                    Category
+                                                </th>
+                                                <th scope="col" className="px-7 py-3">
+                                                    Subcategory
+                                                </th>
+                                                <th scope="col" className="px-7 py-3">
+                                                    Complaint Status
+                                                </th>
+                                                <th scope="col" className="px-7 py-3">
+                                                    Description
+                                                </th>
+                                                <th scope="col" className="px-7 py-3">
+                                                    Date
+                                                </th>
+                                                <th scope="col" className="px-7 py-3">
+                                                    Images
+                                                </th>
+                                                <th scope="col" className="px-7 py-3">
+                                                    Attendant
+                                                </th>
+                                                <th scope="col" className="px-7 py-3">
+                                                    Remarks
+                                                </th>
+                                            </tr>
+                                        )}
                     </thead>
                     <tbody>
 

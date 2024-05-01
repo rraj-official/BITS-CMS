@@ -28,7 +28,7 @@ const Technician = () => {
     const [updatedComplaints, setUpdatedComplaints] = useState([]);
     const [loginData, setLoginData] = useState({});
     const { technicianData, updateTechnicianData } = useContext(TechnicianContext);
-    
+    console.log(technicianData)
     
     const fetchComplaints = async () => {
         try {
@@ -155,7 +155,7 @@ function classNames(...classes) {
     return (
         <div className='bg-[#f6f6f9] pt-5'>
             <h2 className="mt-10 mb-10 text-center text-xl md:text-2xl leading-9 tracking-tight text-gray-600">
-                Hi {technician_details.name}, here are your tasks for the day {technicianData}
+                Hi {technicianData[0]}, here are your tasks for the day
             </h2>
             <div className="relative overflow-x-auto px-10">
                 <div className='w-full text-xxs text-left text-black dark:text-[#18185d] md:hidden'>

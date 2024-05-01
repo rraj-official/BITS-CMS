@@ -97,12 +97,16 @@ const Navbar = () => {
         // console.log(userStatus);
         if (userStatus === "admin") {
             navigate("/students_complaints");
+            setSelectedItem(navigation[7]);
         } else if (userStatus === "student") {
             navigate("/new_complaint");
+            setSelectedItem(navigation[1]);
         } else if (userStatus === "staff") {
             navigate("/staff_new_complaint");
+            setSelectedItem(navigation[4]);
         } else if (userStatus === "technician") {
             navigate("/technician");
+            setSelectedItem(navigation[10]);
         } else {
             navigate("/login");
         }
